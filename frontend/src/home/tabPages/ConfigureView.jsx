@@ -11,7 +11,7 @@ import { Modal } from '@/snake/main'
 import { safeParse } from '../helper'
 import { FieldView } from '../components/FieldView'
 import { selectNode, updateGFW } from '../service'
-import { language } from '@/src/ i18n/en'
+import { language } from '@/src/i18n/en'
 
 const pac2From = v => {
     return safeParse(v).join('\n')
@@ -77,10 +77,10 @@ export function ConfigureView() {
             <FieldView title="GFW List Url" tips={<span className='pointer' onClick={handleGFWUpdate}>{language.Refresh}</span>}>
                 <Input minHeight="4em" autoHeight  name="gfwUrl" placeholder="" className={S.flex1} />
             </FieldView>
-            <FieldView title="Pac Proxy Rules">
+            <FieldView title="Pac Proxy Rules" tips={language.UsefulInDirectMode}>
                 <Textarea minHeight="4em" autoHeight name="pacProxy" placeholder="google.com" className={S.flex1} />
             </FieldView>
-            <FieldView title="Pac Direct Rules">
+            <FieldView title="Pac Direct Rules" tips={language.UsefulInProxyMode}>
                 <Textarea minHeight="4em" autoHeight  name="pacDirect" placeholder="deepseek.com" className={S.flex1} />
             </FieldView>
             <FieldView title="Remote Pac Url" tips=''>

@@ -56,4 +56,9 @@ export const language = {
     PacDoesNotUseProxyByDefaultSetPacProxyRulesToSpecifyDomainsThatUseProxy: 'Pac does not use proxy by default, set Pac Proxy Rules to specify domains that use proxy',
     /** 禁用代理 */
     DisableProxy: 'Disable Proxy',
+
+    /** Direct模式下有用 */
+    UsefulInDirectMode: 'Useful in Direct mode',
+    /** Proxy模式下有用 */
+    UsefulInProxyMode: 'Useful in Proxy mode',
 }

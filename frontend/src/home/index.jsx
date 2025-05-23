@@ -16,7 +16,7 @@ import { AboutView } from './tabPages/AboutView'
 import { SwitchMulti } from './components/SwitchMulti'
 import { PacView } from './tabPages/PacView'
 import { NetStatView } from './components/NetStatView'
-import { language } from '../ i18n/en'
+import { language } from '../i18n/en'
 
 const TabEnmu = {
     CONFIG: 'CONFIG',

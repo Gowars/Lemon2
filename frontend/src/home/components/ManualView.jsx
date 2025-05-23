@@ -12,7 +12,7 @@ import { uuid32 } from '@/lemon-tools/uuid'
 import { FieldView } from './FieldView'
 import { createVmess, safeParse } from '../helper'
 import { convertConfig2vmess, selectNode } from '../service'
-import { language } from '@/src/ i18n/en'
+import { language } from '@/src/i18n/en'
 
 export function ManualView(props) {
     const appState = useAppState()
