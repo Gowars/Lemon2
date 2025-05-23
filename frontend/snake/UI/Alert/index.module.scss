@@ -1,0 +1,27 @@
+.alert {
+    color: #fff;
+    padding: 10px;
+    line-height: 2;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    &.success {
+        background-color: #f0f9eb;
+        color: #67c23a;
+    }
+
+    &.info {
+        background-color: #f4f4f5;
+        color: #909399;
+    }
+
+    &.warning {
+        background-color: #fdf6ec;
+        color: #e6a23c;
+    }
+
+    &.error {
+        background-color: #fef0f0;
+        color: #f56c6c;
+    }
+}

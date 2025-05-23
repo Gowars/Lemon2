@@ -1,0 +1,133 @@
+.ui-tooltip {
+    position: relative;
+
+    &.flex {
+        display: flex;
+    }
+
+    .tips {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        left: 50%;
+        border-radius: 5px;
+        width: max-content;
+        font-size: 12px;
+        line-height: normal;
+        color: #fff;
+        z-index: 1000;
+        transition: 0.3s;
+        transition-property: transform, opacity, margin;
+
+        :global(.device-pc) & {
+            display: block;
+        }
+
+        &.hide {
+            display: none;
+            pointer-events: none;
+        }
+
+        &.top {
+            bottom: 100%;
+            transform: translate(-50%, -13px);
+            &.hide {
+                transform: translate(-50%, -7px);
+            }
+            // 三角形
+            &::after {
+                content: '';
+                position: absolute;
+                border-top: 13px solid rgba(0, 0, 0, 0.8);
+                border-right: 8px solid transparent;
+                border-left: 8px solid transparent;
+                top: 100%;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        &.topLeft {
+            bottom: 100%;
+            left: 50%;
+            transform: translate(0%, -10px);
+            border-bottom-left-radius: 0;
+            &.hide {
+                transform: translate(0%, -3px);
+            }
+            // 三角形
+            &::after {
+                content: '';
+                position: absolute;
+                border-top: 10px solid rgba(0, 0, 0, 0.8);
+                border-right: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                top: 100%;
+                left: 0%;
+                // transform: translate(-50%, 0);
+            }
+        }
+
+        &.bottom {
+            top: 100%;
+            transform: translate(-50%, 10px);
+            &.hide {
+                transform: translate(-50%, 3px);
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                border-bottom: 10px solid rgba(0, 0, 0, 0.8);
+                border-right: 8px solid transparent;
+                border-left: 8px solid transparent;
+                bottom: 100%;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        &.bottomLeft {
+            // bottom: 100%;
+            left: 50%;
+            // 三角形
+            top: 100%;
+            transform: translate(0%, -10px);
+            border-top-left-radius: 0;
+            transform: translate(0%, 10px);
+            &.hide {
+                transform: translate(0%, 3px);
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                border-bottom: 10px solid rgba(0, 0, 0, 0.8);
+                border-right: 8px solid transparent;
+                border-top: 8px solid transparent;
+                bottom: 100%;
+                left: 0%;
+                // transform: translate(-50%, 0);
+            }
+        }
+    }
+}
+
+:global {
+    .ui-tip-animation-enter {
+        opacity: 0;
+        margin-top: 4px;
+    }
+
+    .ui-tip-animation-enter-active {
+        opacity: 1;
+        margin-top: 0px;
+    }
+
+    .ui-tip-animation-exit {
+        opacity: 1;
+        margin-top: 0px;
+    }
+
+    .ui-tip-animation-exit-active {
+        opacity: 0;
+        margin-top: 4px;
+    }
+}

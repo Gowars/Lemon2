@@ -1,0 +1,35 @@
+.transition {
+    transition: transform 0.3s;
+}
+
+$animationTime: 0.3s;
+$delayTime: 0.1s;
+.animation-to-right {
+    transform: translateX(0%);
+    animation: toRight $animationTime $delayTime;
+    animation-fill-mode: forwards;
+
+    @keyframes toRight {
+        from {
+            transform: translateX(0%);
+        }
+        to {
+            transform: translateX(100%);
+        }
+    }
+}
+
+.animation-to-left {
+    transform: translateX(100%);
+    animation: toLeft $animationTime $delayTime;
+    animation-fill-mode: forwards;
+
+    @keyframes toLeft {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0%);
+        }
+    }
+}

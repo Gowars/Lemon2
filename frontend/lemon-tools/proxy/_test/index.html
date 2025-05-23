@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script src="./../index.js"></script>
+        <script>
+            var obj = {
+                name: 234,
+                person: {
+                    age: 100,
+                },
+            };
+            var hah = watch(obj, console.log);
+            var fakeH = watch(obj, console.log);
+
+            var ddAutoRun = autoRun(() => {
+                hah.person = 1;
+                console.log('谁的年纪是: ', hah.person.age);
+            });
+        </script>
+    </body>
+</html>

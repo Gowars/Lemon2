@@ -1,0 +1,60 @@
+.tab {
+    display: flex;
+    text-align: center;
+    position: relative;
+    background: #fff;
+
+    :global(.device-appFullView) & {
+        padding-top: 34px;
+    }
+
+    .item {
+        flex: 1;
+        cursor: pointer;
+        line-height: 48px;
+        box-sizing: border-box;
+        position: relative;
+        &.active {
+            font-size: 1.3em;
+        }
+    }
+
+    .border {
+        height: 2px;
+        position: absolute;
+        bottom: 6px;
+        left: 0;
+        transition: transform 0.2s;
+        transform: translateX(0);
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        overflow: hidden;
+
+        :global(.ui-tab-touch-active) & {
+            transition: none;
+        }
+
+        &.full {
+            span {
+                display: block;
+                width: 100%;
+                font-size: 0;
+            }
+        }
+
+        &.tiny {
+            span {
+                display: inline-block;
+            }
+        }
+
+        span {
+            height: 100%;
+            background: currentColor;
+            overflow: hidden;
+            display: block;
+        }
+    }
+}

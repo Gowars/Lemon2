@@ -1,0 +1,107 @@
+.root-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    background: #fff;
+    position: relative;
+    z-index: 1;
+    animation-fill-mode: both;
+}
+
+.root-page.root-page-hide,
+.root-page.root-page-push-hide {
+    /* 需要隐藏fixed定位的元素，并且不希望display: none；那样的话有些异步任务获取的页面元素信息可能有点问题 */
+    transform: translate(0, 0);
+    height: 0px !important;
+    min-height: 0px !important;
+    overflow: hidden;
+    z-index: unset;
+}
+
+.device-pc .root-page.root-page-hide {
+    display: none;
+}
+
+.page-come-in {
+    animation: pageComeIn 200ms both;
+    z-index: 100;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+}
+
+@keyframes pageComeIn {
+    from {
+        transform: translateX(30vw);
+        /* left: 30%; */
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+}
+
+.page-come-out {
+    animation: pageComeOut 200ms both;
+    z-index: 100;
+    position: fixed;
+    width: 100vw;
+    overflow: hidden;
+    top: 0;
+}
+
+@keyframes pageComeOut {
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(120vw);
+    }
+}
+
+.page-come-in-from-bottom {
+    animation: pageComeInFromBottom 200ms both;
+    z-index: 100;
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw;
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden;
+}
+
+@keyframes pageComeInFromBottom {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.page-come-out-from-bottom {
+    animation: pageComeOutFromBottom 200ms both;
+    z-index: 10000;
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw;
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden;
+}
+
+@keyframes pageComeOutFromBottom {
+    from {
+        transform: translateY(0%);
+    }
+
+    to {
+        transform: translateY(100%);
+    }
+}

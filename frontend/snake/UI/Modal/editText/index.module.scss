@@ -1,0 +1,32 @@
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 15px 34px;
+    background-color: #fff;
+    border-radius: 15px;
+    max-width: 800px;
+    width: 7.5rem;
+    box-sizing: border-box;
+    margin: 0 auto;
+    :global(.device-phone) & {
+        border-radius: 15px 15px 0 0;
+    }
+    .titleRow {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    textarea {
+        min-height: 200px;
+        padding: 10px;
+    }
+    .title {
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        line-height: 40px;
+        margin: 0 10px;
+        flex: 1;
+    }
+}

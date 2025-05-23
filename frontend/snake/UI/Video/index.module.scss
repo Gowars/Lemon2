@@ -1,0 +1,48 @@
+.videoWrap {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+video {
+    height: 100%;
+    width: 100%;
+    &::-webkit-media-controls-start-playback-button {
+        display: none;
+    }
+}
+
+.info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    height: 30px;
+    opacity: 0.4;
+    transition: transform 0.2s;
+    &.hide {
+        transform: translateY(100%);
+    }
+}
+
+.progressWrap {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    background: pink;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background: red;
+}
+
+.toggle {
+    width: 30px;
+    height: 100%;
+    background: blue;
+}

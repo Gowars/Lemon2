@@ -1,0 +1,12 @@
+.TabsCard {
+    display: flex;
+    margin-bottom: 5px;
+    & > div {
+        padding-bottom: 5px;
+        margin-right: 15px;
+        cursor: pointer;
+        &.active {
+            border-bottom: 4px solid red;
+        }
+    }
+}

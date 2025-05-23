@@ -1,0 +1,29 @@
+:global {
+    .ui-table {
+        /* table 1px 解决方案 */
+        $border: #eee;
+        width: 100%;
+        /* border-collapse: collapse; */
+        border-spacing: 0;
+        border-top: 1px solid $border;
+        border-left: 1px solid $border;
+        /* 指定每个元素的right bottom，然后整体指定top left */
+        td,
+        th {
+            border-right: 1px solid $border;
+            border-bottom: 1px solid $border;
+            padding: 7px;
+        }
+        &.ui-table-theme-even {
+            tr:nth-child(even) {
+                background-color: #f6f6f6;
+            }
+            tr:hover {
+                background-color: #f0f0f0;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        }
+    }
+}
