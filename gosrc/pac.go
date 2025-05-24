@@ -2,6 +2,7 @@ package gosrc
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,6 +11,7 @@ import (
 	"os/exec"
 	"strings"
 	"text/template"
+	"time"
 )
 
 func MakeRootDir() string {
@@ -56,7 +58,8 @@ type IFrontConfig struct {
 }
 
 type PacServer struct {
-	Status string // off关闭 proxy默认代理 direct默认直连
+	Status string       // off关闭 proxy默认代理 direct默认直连
+	server *http.Server // Store the server instance
 }
 
 // NewApp creates a new App application struct
@@ -66,23 +69,12 @@ func NewPacServer() *PacServer {
 	}
 }
 
-func (ins *PacServer) Reload() {
-	ins.SetStatus(ins.Status)
-}
-
-func (ins *PacServer) SetStatus(status string) {
-	ins.Status = status
-	ins.Stop()
-	if ins.Status != "off" {
-		ins.Start()
-	}
-}
-
 func (ins *PacServer) GetFrontConfig() IFrontConfig {
 	value, err := os.ReadFile(CreateRootPath("v2ray.all.json"))
 	// 定义目标变量
 	var v IFrontConfig
 	if err != nil {
+		fmt.Printf("read v2ray.all.json fail", err)
 		return v
 	}
 
@@ -96,9 +88,7 @@ func (ins *PacServer) GetFrontConfig() IFrontConfig {
 
 func (ins *PacServer) Start() {
 	frontConfig := ins.GetFrontConfig()
-	if ins.Status == "off" {
-		return
-	}
+	ins.CreateHTTPServer()
 	ins.CreatePacFile("127.0.0.1", "proxy.js")
 	ins.CreatePacFile(GetLocalIP(), "proxy.remote.js")
 	network := NewNetworkSetup()
@@ -113,6 +103,7 @@ func (ins *PacServer) Stop() {
 	network := NewNetworkSetup()
 	network.ClearPacUrl()
 	network.DisableGlobalProxy()
+	ins.StopHTTPServer()
 }
 
 func (ins *PacServer) CreatePacFile(IP string, filename string) {
@@ -186,8 +177,10 @@ func (ins *PacServer) CreateHTTPServer() {
 	// 创建文件服务器，服务 static 目录
 	fs := http.FileServer(http.Dir(staticDir))
 
+	mux := http.NewServeMux()
+
 	// 包装文件服务器，禁用目录列表
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// 如果请求的是目录，尝试加载 index.html
 		if r.URL.Path != "/" {
 			fs.ServeHTTP(w, r)
@@ -198,13 +191,38 @@ func (ins *PacServer) CreateHTTPServer() {
 	})
 
 	dport := fmt.Sprintf(":%d", frontConfig.PacPort)
-
-	// 启动服务并记录错误
-	log.Println("服务器启动于" + dport)
-	err := http.ListenAndServe(dport, nil)
-	if err != nil {
-		log.Fatal("启动失败: ", err)
+	ins.server = &http.Server{
+		Addr:    dport,
+		Handler: mux,
 	}
+
+	// Start server in a goroutine
+	go func() {
+		log.Println("服务器启动于" + dport)
+		if err := ins.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("启动失败: %v", err)
+		}
+	}()
+}
+
+// StopHTTPServer explicitly stops the HTTP server
+func (ins *PacServer) StopHTTPServer() error {
+	if ins.server == nil {
+		return fmt.Errorf("server is not running")
+	}
+
+	// Create a context with timeout for graceful shutdown
+	ctx, cancel := context.WithTimeout(context.Background(), 0*time.Second)
+	defer cancel()
+
+	log.Println("Stopping server...")
+	if err := ins.server.Shutdown(ctx); err != nil {
+		log.Printf("Server shutdown error: %v", err)
+		return err
+	}
+	log.Println("Server stopped gracefully")
+	ins.server = nil // Clear server reference
+	return nil
 }
 
 func Loggggg(name string) {

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -40,9 +41,6 @@ func resolvePath(src string) string {
 
 // NewApp creates a new App application struct
 func NewV2rayCore(assets embed.FS, pacServer *PacServer) *V2rayCore {
-	go func() {
-		pacServer.CreateHTTPServer()
-	}()
 	return &V2rayCore{
 		AppDir:          resolvePath(""),
 		ConfigPath:      resolvePath("/v2ray.config.json"),
@@ -107,9 +105,37 @@ func (v *V2rayCore) Stop() {
 	v.v2rayFilePath = ""
 }
 
-func (v *V2rayCore) Restart() {
+func (v *V2rayCore) Restart() string {
 	v.Stop()
+	log.Printf("\n----- restart ------------\n")
+	msg := v.LsofPort()
+	if len(msg) > 0 {
+		return msg
+	}
 	v.Start()
+	return "success"
+}
+
+func isPortInUse(port int) bool {
+	addr := fmt.Sprintf(":%d", port)
+	listener, err := net.Listen("tcp", addr)
+	if err != nil {
+		return true // 端口被占用
+	}
+	defer listener.Close()
+	return false // 端口可用
+}
+
+func (v *V2rayCore) LsofPort() string {
+	config := v.PacServer.GetFrontConfig()
+	ports := []int64{config.HttpPort, config.SocksPort, config.PacPort}
+
+	for _, port := range ports {
+		if isPortInUse(int(port)) {
+			return fmt.Sprintf("%d", port) + "USED"
+		}
+	}
+	return ""
 }
 
 func (v *V2rayCore) GetConfig() string {
@@ -125,7 +151,6 @@ func (v *V2rayCore) SetConfig(config string) {
 	if err != nil {
 		log.Panic(err)
 	}
-	v.Restart()
 }
 
 func (v *V2rayCore) SaveFrontConfig(config string) {
@@ -244,6 +269,9 @@ func (v *V2rayCore) GetV2rayInfo() string {
 }
 
 func (v *V2rayCore) GetNetStats() string {
+	if v.v2rayCmd == nil {
+		return ""
+	}
 	id := v.v2rayCmd.Process.Pid
 	if id > 0 {
 		// 通过nettop监控v2ray进程的流量情况，可通过man nettop查看详细文档

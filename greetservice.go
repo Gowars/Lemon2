@@ -35,7 +35,7 @@ func (a *GreetService) startup(ctx *application.App) {
 	a.ctx.OnEvent("handle-gfw", func(event *application.CustomEvent) {
 		data := fmt.Sprintf("%v", event.Data)
 		gosrc.CreateGfwServer().HandleGFW(data)
-		a.v2rayCore.PacServer.Reload()
+		a.v2rayCore.Restart()
 	})
 }
 
@@ -76,10 +76,9 @@ func (a *GreetService) Greet(name string) string {
 			a.v2rayCore.Stop()
 			a.toggleLable(false)
 		} else {
-			a.v2rayCore.Start()
 			a.toggleLable(true)
+			return a.v2rayCore.Restart()
 		}
-		a.v2rayCore.PacServer.SetStatus(req.Data)
 	} else if req.Type == "get-config" {
 		return a.v2rayCore.GetConfig()
 	} else if req.Type == "check-is-run" {
@@ -90,7 +89,7 @@ func (a *GreetService) Greet(name string) string {
 		return a.RequestForFront(req.Data)
 	} else if req.Type == "set-config" {
 		a.v2rayCore.SetConfig(req.Data)
-		return "success"
+		return a.v2rayCore.Restart()
 	} else if req.Type == "save-all" {
 		a.v2rayCore.SaveFrontConfig(req.Data)
 		return "success"
