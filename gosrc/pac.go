@@ -86,6 +86,10 @@ func (ins *PacServer) GetFrontConfig() IFrontConfig {
 	return v
 }
 
+func (ins *PacServer) SetStatus(status string) {
+	ins.Status = status
+}
+
 func (ins *PacServer) Start() {
 	frontConfig := ins.GetFrontConfig()
 	ins.CreateHTTPServer()

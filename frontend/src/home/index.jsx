@@ -17,6 +17,8 @@ import { SwitchMulti } from './components/SwitchMulti'
 import { PacView } from './tabPages/PacView'
 import { NetStatView } from './components/NetStatView'
 import { language } from '../i18n/en'
+import { Events } from '@wailsio/runtime'
+import { Modal } from '@/snake/main'
 
 const TabEnmu = {
     CONFIG: 'CONFIG',
@@ -60,7 +62,7 @@ export function Page() {
     }
 
     useEffect(()=> {
-        callGo('get-save-all').then((res) => {
+        callGo('get-front-config').then((res) => {
             setAppState(JSON.parse(res))
         })
         callGo('get-system-info').then(res => {
@@ -78,6 +80,12 @@ export function Page() {
                   }
                 })
         }, { time: 10 * 1000 })
+    }, [])
+
+    useEffect(() => {
+        return Events.On("lsof:error", (res) => {
+            Modal.fail(language.StartupFailedThePortIsOccupied + ': ' + res.data[0])
+        })
     }, [])
 
     useEffect(() => {

@@ -111,7 +111,7 @@ export function getServers(url, callback) {
                 //     }
                 // }
             }).filter(i => i)
-            callback(servers)
+            servers.length && callback(servers)
         }
     })
 }

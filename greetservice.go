@@ -7,6 +7,7 @@ import (
 	"log"
 	"os/exec"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
@@ -30,7 +31,7 @@ func (a *GreetService) startup(ctx *application.App) {
 	// Perform your setup here
 	a.ctx = ctx
 	pacServer := gosrc.NewPacServer()
-	a.v2rayCore = gosrc.NewV2rayCore(assets, pacServer)
+	a.v2rayCore = gosrc.NewV2rayCore(assets, pacServer, ctx)
 
 	a.ctx.OnEvent("handle-gfw", func(event *application.CustomEvent) {
 		data := fmt.Sprintf("%v", event.Data)
@@ -72,6 +73,7 @@ func (a *GreetService) Greet(name string) string {
 	req := decodeBridge(name)
 	log.Println("name::", req.Type)
 	if req.Type == "pac-mode-change" {
+		a.v2rayCore.PacServer.SetStatus(req.Data)
 		if req.Data == "off" {
 			a.v2rayCore.Stop()
 			a.toggleLable(false)
@@ -90,14 +92,12 @@ func (a *GreetService) Greet(name string) string {
 	} else if req.Type == "set-config" {
 		a.v2rayCore.SetConfig(req.Data)
 		return a.v2rayCore.Restart()
-	} else if req.Type == "save-all" {
+	} else if req.Type == "save-front-config" {
 		a.v2rayCore.SaveFrontConfig(req.Data)
 		return "success"
-	} else if req.Type == "get-save-all" {
-		// return "222"
+	} else if req.Type == "get-front-config" {
 		return a.v2rayCore.GetFrontConfig()
 	} else if req.Type == "clear-v2ray-log" {
-		// return "222"
 		a.v2rayCore.ClearV2rayLog()
 		return "success"
 	} else if req.Type == "get-local-ip" {
@@ -113,10 +113,19 @@ func (a *GreetService) Greet(name string) string {
 		return a.v2rayCore.GetV2rayInfo()
 	} else if req.Type == "get-pac-content" {
 		return a.pacServer.GetPacContent()
-	} else if req.Type == "get-v2ray-stats" {
+	} else if req.Type == "get-net-stats" {
 		return a.v2rayCore.GetNetStats()
 	} else if req.Type == "open-url" {
 		exec.Command("open", req.Data).CombinedOutput()
+		return "success"
+	} else if req.Type == "lsof" {
+		port, err := strconv.Atoi(req.Data)
+		if err != nil {
+			return "Error fomart"
+		}
+		if a.v2rayCore.IsPortInUse(port) {
+			return "false"
+		}
 		return "success"
 	}
 

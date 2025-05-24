@@ -61,4 +61,6 @@ export const language = {
     UsefulInDirectMode: 'Useful in Direct mode',
     /** Proxy模式下有用 */
     UsefulInProxyMode: 'Useful in Proxy mode',
+    /** 启动失败，端口已被占用 */
+    StartupFailedThePortIsOccupied: 'Startup failed, the port is occupied',
 }

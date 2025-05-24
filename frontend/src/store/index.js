@@ -14,7 +14,7 @@ const stateCache = (key) => ({
         // eslint-disable-next-line no-unused-vars
         const { comments, ...willCacheState } = newState;
         storage.setItem(key, willCacheState);
-        callGo('save-all', JSON.stringify(newState))
+        callGo('save-front-config', JSON.stringify(newState))
     },
 });
 
@@ -31,9 +31,9 @@ const state = {
     remotePacUrl: '',
     httpPort: 1087,
     socksPort: 7890,
+    pacPort: 9988,
     v2rayIP: '0.0.0.0',
     gfwUrl: 'https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt',
-    pacPort: 9988,
     pacDirect: '[]',
     pacProxy: '[]',
     pacMode: 'proxy',

@@ -9,7 +9,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
+
+	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
 type AppConfig struct {
@@ -29,6 +32,7 @@ type V2rayCore struct {
 	Assets          embed.FS
 	AppDir          string
 	PacServer       *PacServer
+	ctx             *application.App
 }
 
 func resolvePath(src string) string {
@@ -40,13 +44,14 @@ func resolvePath(src string) string {
 }
 
 // NewApp creates a new App application struct
-func NewV2rayCore(assets embed.FS, pacServer *PacServer) *V2rayCore {
+func NewV2rayCore(assets embed.FS, pacServer *PacServer, ctx *application.App) *V2rayCore {
 	return &V2rayCore{
 		AppDir:          resolvePath(""),
 		ConfigPath:      resolvePath("/v2ray.config.json"),
 		FrontConfigPath: resolvePath("/v2ray.all.json"),
 		Assets:          assets,
 		PacServer:       pacServer,
+		ctx:             ctx,
 	}
 }
 
@@ -116,7 +121,7 @@ func (v *V2rayCore) Restart() string {
 	return "success"
 }
 
-func isPortInUse(port int) bool {
+func (v *V2rayCore) IsPortInUse(port int) bool {
 	addr := fmt.Sprintf(":%d", port)
 	listener, err := net.Listen("tcp", addr)
 	if err != nil {
@@ -130,10 +135,16 @@ func (v *V2rayCore) LsofPort() string {
 	config := v.PacServer.GetFrontConfig()
 	ports := []int64{config.HttpPort, config.SocksPort, config.PacPort}
 
+	usedPorts := []string{}
 	for _, port := range ports {
-		if isPortInUse(int(port)) {
-			return fmt.Sprintf("%d", port) + "USED"
+		if v.IsPortInUse(int(port)) {
+			usedPorts = append(usedPorts, fmt.Sprintf("%d", port))
 		}
+	}
+	if len(usedPorts) > 0 {
+		res := strings.Join(usedPorts, ",")
+		v.ctx.EmitEvent("lsof:error", res)
+		return res
 	}
 	return ""
 }

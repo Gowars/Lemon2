@@ -23,7 +23,7 @@ export function NetStatView() {
     })
     useEffect(() => {
         return interval(() => {
-            callGo('get-v2ray-stats').then(code => {
+            callGo('get-net-stats').then(code => {
                 const info = geNetStat(code)
                 const prev = stateRef.current.list.slice(-1)[0]
                 const speed = { per_in: '0', per_out: '0', }
