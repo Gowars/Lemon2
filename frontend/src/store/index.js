@@ -18,34 +18,33 @@ const stateCache = (key) => ({
     },
 });
 
-const state = {
-    on: false, // 代理是否开启
-    subscribes: [], // 订阅地址
-    tag: '', // 当前选中的server ps
-    config: {}, // 当前配置信息
-    manualConfig: [], // 手动添加的配置
-    pac: JSON.stringify({
-        direct: '',
-        proxy: '',
-    }),
-    remotePacUrl: '',
-    httpPort: 1087,
-    socksPort: 7890,
-    pacPort: 9988,
-    v2rayIP: '0.0.0.0',
-    gfwUrl: 'https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt',
-    pacDirect: '[]',
-    pacProxy: '[]',
-    pacMode: 'proxy',
-    AppDir: '',
+function getInitState() {
+    return {
+        pacMode: 'off',
+        subscribes: [], // 订阅地址
+        tag: '', // 当前选中的server ps
+        config: {}, // 当前配置信息
+        manualConfig: [], // 手动添加的配置
+        remotePacUrl: '',
+        httpPort: 1087,
+        socksPort: 7890,
+        pacPort: 9988,
+        v2rayIP: '0.0.0.0',
+        gfwUrl: 'https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt',
+        pacDirect: '[]',
+        pacProxy: '[]',
+        AppDir: '',
+    }
 }
 
-const namespace = 'app'
+const state = getInitState()
+
+const namespace = 'app-v0.0.1'
 const { dispatch: dispatchApp, } = model(
     state,
     {
         namespace,
-        plugin: [stateCache('globalState-v1')], // 做一个缓存
+        plugin: [stateCache('app-v0.0.1')], // 做一个缓存
         reducer: {
             updateState(draft, { data, runner }) {
                 data && Object.keys(data).forEach(key => {
@@ -93,3 +92,6 @@ export function setAppState(newState, runner) {
     dispatchApp({ type: 'updateState', data: newState, runner })
 }
 
+export function resetAppState() {
+    dispatchApp({ type: 'updateState', data: getInitState() })
+}
