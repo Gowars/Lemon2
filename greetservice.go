@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
@@ -172,40 +173,78 @@ func (a *GreetService) RequestForFront(url string) string {
 	return ""
 }
 
+func runPing(ip string) string {
+	pingTime := ""
+	// ping设置超时
+	cmd := exec.Command("ping", "-W", "3", "-c", "1", ip)
+	output, err := cmd.Output()
+	if err != nil {
+		fmt.Println("执行 ping 命令失败:", err)
+		return pingTime
+	}
+
+	// 输出示例：64 bytes from 142.250.184.132: icmp_seq=0 ttl=117 time=23.456 ms
+	re := regexp.MustCompile(`time=([\d\.]+)\s*ms`)
+	matches := re.FindStringSubmatch(string(output))
+	if len(matches) > 1 {
+		pingTime = matches[1]
+	}
+	return pingTime
+}
+
+func runNetcat(ip string, port string) string {
+	pingTime := ""
+	// netcat
+	start := time.Now().UnixMilli()
+	cmd := exec.Command("nc", "-w", "2", "-z", ip, port)
+	_, err := cmd.Output()
+	if err != nil {
+		fmt.Println("执行 nc 命令失败:", err)
+		return pingTime
+	}
+	end := time.Now().UnixMilli() - start
+	if end < 2000 {
+		pingTime = fmt.Sprintf("%d", end)
+	}
+	return pingTime
+}
+
 func (a *GreetService) PingIP(ips string) string {
 	arr := strings.Split(ips, ",")
 	for _, ip := range arr {
 		go func() {
-			cmd := exec.Command("ping", "-c", "1", ip)
-			output, err := cmd.Output()
+			if !strings.Contains(ip, ":") {
+				return
+			}
+			arr := strings.Split(ip, ":")
+			if len(arr) == 0 {
+				return
+			}
+			ip = arr[0]
+			// TODO: 严格来讲，应当使用netcat作为ping的结果比较合适
+			// 因为ping不能指定port
+			pingTime := runPing(ip)
+			if len(pingTime) == 0 && len(arr) > 1 {
+				port := arr[1]
+				pingTime = runNetcat(ip, port)
+			}
+
+			fmt.Println(ip, "耗时:", pingTime, "ms")
+			type Res struct {
+				IP   string `json:"ip"`
+				Time string `json:"time"`
+			}
+			res := Res{
+				IP:   ip,
+				Time: pingTime,
+			}
+			jsonData, err := json.Marshal(res)
 			if err != nil {
-				fmt.Println("执行 ping 命令失败:", err)
+				fmt.Println("Error:", err)
 				return
 			}
 
-			// 输出示例：64 bytes from 142.250.184.132: icmp_seq=0 ttl=117 time=23.456 ms
-			re := regexp.MustCompile(`time=([\d\.]+)\s*ms`)
-			matches := re.FindStringSubmatch(string(output))
-			if len(matches) > 1 {
-				fmt.Println(ip, "耗时:", matches[1], "ms")
-				type Res struct {
-					IP   string `json:"ip"`
-					Time string `json:"time"`
-				}
-				res := Res{
-					IP:   ip,
-					Time: matches[1],
-				}
-				jsonData, err := json.Marshal(res)
-				if err != nil {
-					fmt.Println("Error:", err)
-					return
-				}
-
-				a.ctx.EmitEvent("ping:response", string(jsonData))
-			} else {
-				fmt.Println("无法解析 ping 输出")
-			}
+			a.ctx.EmitEvent("ping:response", string(jsonData))
 		}()
 	}
 
