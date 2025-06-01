@@ -1,12 +1,12 @@
-import { dispatchApp, getAppState, setAppState, useAppState } from '@/src/store'
+import { dispatchApp, getAppState, resetAppState, setAppState, useAppState } from '@/src/store'
 import { useBetterState } from '@/snake/useLib/index.jsx'
 import React, { useEffect } from 'react'
 
 import S from './index.module.scss'
 import cx from '@/lemon-tools/cx'
 import { callGo } from './core.js'
-import { createQRCode, getSelectNodeConfig, showSelectedSever } from './service'
-import { interval, sleep } from './helper'
+import { createQRCode, getSelectNodeConfig, selectNode, showSelectedSever, updateGFW } from './service'
+import { interval, safeParse, sleep } from './helper'
 import { ServerView } from './tabPages/ServerView'
 import { ConfigureView } from './tabPages/ConfigureView'
 import { CodeBlockView } from './components/CodeBlockView'
@@ -63,12 +63,17 @@ export function Page() {
 
     useEffect(()=> {
         callGo('get-front-config').then((res) => {
-            setAppState(JSON.parse(res))
+            const state = safeParse(res)
+            if (state) {
+                setAppState(state)
+            } else {
+                resetAppState()
+            }
+            callGo('get-system-info').then(res => {
+                setAppState(JSON.parse(res))
+            })
+            dispatchApp({ type: 'getConfig' })
         })
-        callGo('get-system-info').then(res => {
-            setAppState(JSON.parse(res))
-        })
-        dispatchApp({ type: 'getConfig' })
 
         // 定时check v2ray是否还在运行，如果挂了就自动启动
         return interval(() => {
@@ -90,6 +95,7 @@ export function Page() {
 
     useEffect(() => {
         appState.pacMode && callGo('pac-mode-change', appState.pacMode)
+        updateGFW(appState.gfwUrl)
     }, [appState.pacMode])
 
     const handleTabChange = (tab) => () => {

@@ -29,14 +29,14 @@ export function CopyProxyView() {
         <CodeBlockView language='bash' onClick={copyShell} code={[
             `export http_proxy=http://127.0.0.1:${appState.httpPort};`,
             `export https_proxy=http://127.0.0.1:${appState.httpPort};`,
-            `export ALL_PROXY=socks5://127.0.0.1:${appState.scoksPort};`,
+            `export ALL_PROXY=socks5://127.0.0.1:${appState.socksPort};`,
         ].join('\n')} />
       </FieldView>
       <FieldView title={language.AddHTTPProxyInTheCurrentDeviceApp}>
         <CodeBlockView language='bash' code={`127.0.0.1:${appState.httpPort}`} className='pointer' />
       </FieldView>
       <FieldView title={language.AddSocketProxyInTheCurrentDeviceApp}>
-        <CodeBlockView language='bash' code={`127.0.0.1:${appState.scoksPort}`} className='pointer' />
+        <CodeBlockView language='bash' code={`127.0.0.1:${appState.socksPort}`} className='pointer' />
       </FieldView>
       <FieldView title={language.AddPacInTheCurrentDeviceApp}>
         <CodeBlockView language='bash' code={`http://127.0.0.1:${appState.pacPort}/proxy.js`} className='pointer' />
@@ -45,14 +45,14 @@ export function CopyProxyView() {
         <CodeBlockView language='bash' onClick={copyShell} className='pointer' code={[
             `export http_proxy=http://${localIP}:${appState.httpPort};`,
             `export https_proxy=http://${localIP}:${appState.httpPort};`,
-            `export ALL_PROXY=socks5://${localIP}:${appState.scoksPort};`,
+            `export ALL_PROXY=socks5://${localIP}:${appState.socksPort};`,
         ].join('\n')} />
       </FieldView>
       <FieldView title={language.AddHTTPProxyInOtherDevicesInTheSameWifiApp}>
         <CodeBlockView language='bash' className='pointer' code={`${localIP}:${appState.httpPort}`} />
       </FieldView>
       <FieldView title={language.AddSocketProxyInOtherDevicesInTheSameWifiApp}>
-        <CodeBlockView language='bash' className='pointer' code={`${localIP}:${appState.scoksPort}`} />
+        <CodeBlockView language='bash' className='pointer' code={`${localIP}:${appState.socksPort}`} />
       </FieldView>
       <FieldView title={language.AddPacInOtherDevicesInTheSameWifi}>
         <CodeBlockView language='bash' code={`http://${localIP}:${appState.pacPort}/proxy.remote.js`} className='pointer' />

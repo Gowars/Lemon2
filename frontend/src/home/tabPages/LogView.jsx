@@ -1,5 +1,5 @@
 import { useAppState } from '@/src/store'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { interval, safeParse } from '../helper'
 import { callGo } from '../core'
 import { clearLog } from '../service'
@@ -8,6 +8,8 @@ import { useBetterState } from '@/snake/useLib'
 import { Form, Input } from '@/snake/UI/Form'
 import S from '../index.module.scss'
 import cx from '@/lemon-tools/cx'
+import { copyToClipboard } from '@/lemon-tools/copyToClipboard'
+import { Modal } from '@/snake/main'
 
 class ProxyProgress {
     constructor() {
@@ -32,20 +34,44 @@ class ProxyProgress {
     toHuman(list = []) {
         return list.map(i => {
             let status = '🍋'
-            const text = i.progress.join('')
+            const text = i.progress.join('\n')
             if (text.includes(' tunneling request to ')) {
                 status = '🔗'
             }
             if (text.includes(' failed to read ')) {
                 status = '❌'
             }
-            const line = i.progress.find(i => i.includes('Connect request to'))
+            const line = i.progress.find(i => i.includes('default route for'))
+            const PID = text.match(/request pid\s+(\d+)/)?.[1] || ''
+            const appFullName = text.match(/request application name\s+(.+)/)?.[1] || ''
+            const appName = appFullName.match(/([^/]+).app\//)?.[1] || appFullName.split('/').slice(-1)[0] || ''
             if (!line) return ''
             const time = line.split('[')[0].trim().split(/\s/).slice(-1)[0]
-            const host = line.split(/Connect request to [^:]+:/)?.[1].trim()
-            return [status, time, host].join(' ')
-        }).filter(i => i).join('\n')
+            const host = line.split(/default route for [^:]+:/)?.[1].trim()
+            return {
+                id: i.id,
+                status,
+                time,
+                host,
+                PID,
+                appName,
+                raw: text,
+            }
+        }).filter(i => i)
     }
+}
+
+function LogItem({ i }) {
+    const copy = useCallback(() => {
+        copyToClipboard(i.raw)
+        Modal.success('Copy success')
+    }, [i.raw])
+    return <div onClick={copy} className='mt6'>
+        <p>{i.status} {i.time} {i.host}</p>
+        {
+            !!i.PID && <p>PID:{i.PID} {i.appName}</p>
+        }
+    </div>
 }
 
 export function LogView({ mini = false }) {
@@ -53,15 +79,15 @@ export function LogView({ mini = false }) {
         log: '',
         search: '',
         mode: mini,
-        progress: '',
+        progress: [],
     })
     const { config } = useAppState()
     const logPath = safeParse(config)?.log?.access || ''
 
     const filter = (content) => {
-        return content.split(/\n/).filter(i => {
-            return state.search.split('|').some(ele => i.includes(ele))
-        }).join('\n')
+        return content.filter(i => {
+            return state.search.split('|').some(ele => i.host.includes(ele))
+        }).map(i => <LogItem key={i.id} i={i} />)
     }
 
     useEffect(() => {
@@ -85,7 +111,7 @@ export function LogView({ mini = false }) {
                     <Input placeholder="🔍 Search Log" name="search" className="flex1" />
                 </Form>
             </div>
-            {filter(state.mode ? state.progress : state.log)}
+            {state.mode ? filter(state.progress) : state.log}
         </div>
 
     if (mini) {

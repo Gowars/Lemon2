@@ -125,9 +125,15 @@ export function ServerView() {
     }
 
     const handlePing = () => {
-        callGo('ping', getAllVmess().map(i => i.setting?.add).filter(i => i).join(',')) //1
+        const info = getAllVmess().map(i => [i.setting?.add, i.setting?.port].filter(i => i).join(':')).filter(i => i).join(',')
+        if (!info) return
+        callGo('ping', info) //1
         setState({ showPing: true })
     }
+
+    useEffect(() => {
+        handlePing()
+    }, [])
 
     return <>
         <div className={cx(S.listBox, 'no-select')}>
