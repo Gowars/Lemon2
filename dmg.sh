@@ -17,6 +17,7 @@ DMG_SIZE="100"                            # DMG 大小（MB，需大于 .app 大
 
 rm -r bin/*.dmg
 mkdir ./release
+rm -r ./release/*
 
 codesign --force --deep --sign "Apple Development: wang king" $APP_PATH
 
