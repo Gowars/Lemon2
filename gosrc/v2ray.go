@@ -248,7 +248,7 @@ func (v *V2rayCore) ClearV2rayLog() {
 }
 
 func (v *V2rayCore) GetLog(path string) string {
-	output, err := exec.Command("tail", "-n", "1000", path).CombinedOutput()
+	output, err := exec.Command("tail", "-n", "3000", path).CombinedOutput()
 	if err != nil {
 		log.Println(err)
 		return ""

@@ -10,7 +10,6 @@ import S from '../index.module.scss'
 import cx from '@/lemon-tools/cx'
 import { copyToClipboard } from '@/lemon-tools/copyToClipboard'
 import { Modal } from '@/snake/main'
-
 class ProxyProgress {
     constructor() {
         this.info = []
@@ -23,7 +22,7 @@ class ProxyProgress {
             if (!item) {
                 item = { id, progress: [] }
                 this.info.push(item)
-                this.info = this.info.slice(-100)
+                this.info = this.info.slice(-300)
             }
             if (!item.progress.includes(ele)) {
                 item.progress.push(ele)
@@ -41,23 +40,37 @@ class ProxyProgress {
             if (text.includes(' failed to read ')) {
                 status = '❌'
             }
-            const line = i.progress.find(i => i.includes('default route for'))
+            if (!i.progress.length) {
+                return null
+            }
+
             const PID = text.match(/request pid\s+(\d+)/)?.[1] || ''
             const appFullName = text.match(/request application name\s+(.+)/)?.[1] || ''
             const appName = appFullName.match(/([^/]+).app\//)?.[1] || appFullName.split('/').slice(-1)[0] || ''
-            if (!line) return ''
-            const time = line.split('[')[0].trim().split(/\s/).slice(-1)[0]
-            const host = line.split(/default route for [^:]+:/)?.[1].trim()
+
+            const host = i.progress.map(i => {
+                return i.match(/request to tcp:(.+)/i)?.[1] || i.split(/default route for [^:]+:/i)?.[1]
+            }).filter(i => i)[0] || ''
+
+            const timeRaw = i.progress.map(i => {
+                    return i.split('[')[0].trim()
+                }).filter(i => /^\d+\/\d/.test(i))[0]
+                || ''
+
             return {
                 id: i.id,
                 status,
-                time,
+                timeRaw,
+                timeId: Number(timeRaw.replace(/\/| |:/g, '')),
+                time: timeRaw.split(/\s/).slice(-1)[0],
                 host,
                 PID,
                 appName,
                 raw: text,
             }
-        }).filter(i => i)
+        })
+        .filter(i => i?.host) // 因为只分析了部分最新日志，所以可能存在没有解析到host
+        .sort((a, b) => b.timeId - a.timeId)
     }
 }
 
@@ -94,7 +107,7 @@ export function LogView({ mini = false }) {
         const x = new ProxyProgress()
         return interval(() => {
             logPath && callGo('get-log', logPath).then(res => {
-                const log = res.split('\n').reverse().slice(0, 1000).join('\n').trim()
+                const log = res.split('\n').reverse().join('\n').trim()
                 setState({
                     log,
                     progress: x.parse(log)
