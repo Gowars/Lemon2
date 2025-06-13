@@ -1,0 +1,139 @@
+:global {
+    @mixin cmodal-dd($transformY, $layerOpacity) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 10000;
+
+        &.layer {
+            transition: background 0.3s;
+            background: rgba(0, 0, 0, $layerOpacity);
+        }
+        & > .content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            transition: transform 0.3s;
+            transform: translateY($transformY);
+        }
+    }
+    .cmodal-dd-enter {
+        @include cmodal-dd(110%, 0);
+    }
+    .cmodal-dd-enter-active,
+    .cmodal-dd-enter-done,
+    .cmodal-dd-exit {
+        @include cmodal-dd(0%, 0.6);
+    }
+    .cmodal-dd-exit-active {
+        @include cmodal-dd(110%, 0);
+    }
+
+    @mixin cmodal-rr($transformY, $layerOpacity) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 10000;
+
+        &.layer {
+            transition: background 0.3s;
+            background: rgba(0, 0, 0, $layerOpacity);
+        }
+        & > .content {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            transition: transform 0.3s;
+            transform: translateX($transformY);
+        }
+    }
+    .cmodal-rr {
+        @include cmodal-rr(0%, 0.6);
+    }
+
+    .cmodal-rr-enter {
+        @include cmodal-rr(110%, 0);
+    }
+    .cmodal-rr-enter-active,
+    .cmodal-rr-exit {
+        @include cmodal-rr(0%, 0.6);
+    }
+    .cmodal-rr-exit-active {
+        @include cmodal-rr(110%, 0);
+    }
+
+    @mixin cmodal-ll($transformY, $layerOpacity) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 10000;
+
+        &.layer {
+            transition: background 0.3s;
+            background: rgba(0, 0, 0, $layerOpacity);
+        }
+        & > .content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            transition: transform 0.3s;
+            transform: translateX($transformY);
+        }
+    }
+    .cmodal-ll {
+        @include cmodal-ll(0%, 0.6);
+    }
+
+    .cmodal-ll-enter {
+        @include cmodal-ll(-110%, 0);
+    }
+    .cmodal-ll-enter-active,
+    .cmodal-ll-exit {
+        @include cmodal-ll(0%, 0.6);
+    }
+    .cmodal-ll-exit-active {
+        @include cmodal-ll(-110%, 0);
+    }
+
+    @mixin cmodal-ss($transformY, $opacity: 0, $layerOpacity: 0) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 10000;
+
+        &.layer {
+            transition: background 0.3s;
+            background: rgba(0, 0, 0, $layerOpacity);
+        }
+        & > .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            opacity: $opacity;
+            transition: all 0.3s;
+            transform: translate3d(-50%, -50%, 0) scale3d($transformY, $transformY, 1);
+        }
+    }
+    .cmodal-ss-enter {
+        @include cmodal-ss(0.2);
+    }
+    .cmodal-ss-enter-active,
+    .cmodal-ss-enter-done,
+    .cmodal-ss-exit {
+        @include cmodal-ss(1, 1, 0.6);
+    }
+    .cmodal-ss-exit-active {
+        @include cmodal-ss(0.2);
+    }
+}

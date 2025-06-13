@@ -1,0 +1,28 @@
+.ios {
+    background-color: #fff;
+    color: #000;
+    border-radius: 15px 15px 0 0;
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 40vh;
+    &.page {
+        background-color: var(--app-background);
+    }
+    .title {
+        text-align: center;
+        font-size: 16px;
+        line-height: 50px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .close {
+        position: absolute;
+        line-height: 50px;
+        width: 50px;
+        right: 0px;
+        top: 0%;
+        font-size: 24px;
+        text-align: center;
+        cursor: pointer;
+    }
+}

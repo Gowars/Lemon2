@@ -1,0 +1,36 @@
+.tag {
+    display: inline-block;
+    color: #fff;
+    padding: 0 0.5em;
+    margin-right: 0.5em;
+    line-height: 1.6;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+
+    &.light {
+        background-color: #ecf5ff;
+        color: #409eff;
+        border: 1px solid #d9ecff;
+    }
+    &.success {
+        background-color: #f0f9eb;
+        border-color: #e1f3d8;
+        color: #67c23a;
+    }
+    &.info {
+        background-color: #f4f4f5;
+        border-color: #e9e9eb;
+        color: #909399;
+    }
+    &.warning {
+        background-color: #fdf6ec;
+        border-color: #faecd8;
+        color: #e6a23c;
+    }
+    &.danger {
+        background-color: #fef0f0;
+        border-color: #fde2e2;
+        color: #f56c6c;
+    }
+}

@@ -1,0 +1,145 @@
+@import "./format";
+@import "./var";
+@import "./layout";
+@import "./animation";
+@import "./tailwind.scss";
+
+input[type="text"],
+input[type="search"],
+input[type="password"] {
+    height: 2em;
+    padding: 0 $padding;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid rgb(219, 223, 220);
+    -webkit-appearance: none; // 内部阴影
+    border-radius: 0;
+
+    &:focus {
+        border-color: $theme-color;
+    }
+    &::placeholder {
+        color: #888;
+    }
+}
+
+// 伪元素样式
+textarea {
+    border: 1px solid rgb(219, 223, 220);
+    resize: none;
+    &::placeholder {
+        color: #888;
+    }
+    &:focus {
+        border-color: $theme-color;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.padding {
+    padding: $padding;
+}
+
+.ui-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-flex {
+    display: flex;
+    &.column {
+        flex-direction: column;
+    }
+}
+.ui-flex1 {
+    flex: 1;
+}
+
+.ui-flex-aj {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ui-flex-a {
+    display: flex;
+    align-items: center;
+}
+
+.ui-flex-ac {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.float-right {
+    float: right;
+}
+
+.lazy-load-img {
+    background-color: $lazyLoadColor;
+}
+
+#app {
+    .limitPageWidth {
+        max-width: $maxWidth;
+        margin: 0 auto;
+    }
+}
+
+.overflow-y {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.touch-effect-ing {
+    // background: #f2f2f2;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.theme-white {
+    background: #fff;
+}
+.theme-gray {
+    background: #f8f8f8;
+}
+
+// 禁止图片、链接 长按弹出系统原生控件，禁止可以拖拽，影响原生感觉
+.device-phone img,
+a {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+}
+
+// 禁止文本选择
+.ly-no-select {
+    user-select: none;
+}
+
+.device-retina .border1px {
+    border-width: 0.5px !important;
+}
+
+:root {
+    --theme-color: #{$theme-color};
+    --success-color: #{$successColor};
+    --error-color: #{$errorColor};
+    --tag-color: #{$tagColor};
+    --warn-color: #{$warnColor};
+    --lazyLoad-color: #{$lazyLoadColor};
+    --opacity-color: #{$opacityColor};
+    --border-color: #{$borderColor};
+}
+
+.page-safe-top {
+    padding-top: env(safe-area-inset-top);
+}

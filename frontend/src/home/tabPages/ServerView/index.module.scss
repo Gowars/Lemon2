@@ -1,0 +1,90 @@
+.serverItem {
+    max-width: 400px;
+    padding: 10px 6px;
+    border-radius: 5px;
+    margin: 5px 8px;
+    cursor: pointer;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    &:hover {
+        // background: #ccc;
+        box-shadow: 0 0 5px #aaa;
+    }
+    &.active {
+        background: var(--theme-color);
+        color: #fff;
+        --app-text-gray-color: #f2f2f2;
+    }
+}
+
+
+
+.listBox {
+    font-size: 12px;
+    height: calc(100vh - var(--navHeight));
+    overflow-y: auto;
+    box-sizing: border-box;
+    // max-width: 300px;
+    // width: max-content;
+    border-right: 1px solid var(--sidebarBgd);
+    width: 280px;
+    .searchBox {
+        padding: 10px;
+        background-color: var(--whiteBgd);
+        input {
+            background: #fff;
+            color: #000;
+            border-radius: 5px;
+            height: 24px;
+            color: inherit;
+            font-size: 11px;
+            border-color: var(--sidebarBgd);
+            &:focus {
+                border-color: var(--theme-color);
+            }
+        }
+    }
+}
+
+.nodeBox {
+    border-top: 5px solid var(--sidebarBgd);
+    background-color: var(--whiteBgd);
+    .sub {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--sidebarBgd);
+        position: relative;
+        button {
+            font-size: inherit;
+            background: var(--theme-color) !important;
+            padding: 4px 8px;
+            line-height: 1;
+        }
+        &.selected {
+            border-bottom: 0;
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                bottom: 3px;
+                left: 6px;
+                height: 3px;
+                width: 150px;
+                background: linear-gradient(
+                    90deg,
+                    var(--hoverColor),
+                    rgba(255, 255, 255, 0)
+                );
+            }
+            .title {
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.borderTop {
+    border-top: 5px solid var(--sidebarBgd);
+}

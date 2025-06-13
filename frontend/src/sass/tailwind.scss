@@ -1,0 +1,136 @@
+@for $i from 1 through 300 {
+    .w#{$i} {
+        width: #{$i}px;
+    }
+    .h#{$i} {
+        height: #{$i}px;
+    }
+    .lh#{$i} {
+        line-height: #{$i}px;
+    }
+    .fs#{$i} {
+        font-size: #{$i}px;
+    }
+    .br#{$i} {
+        border-radius: #{$i}px;
+    }
+    .mm#{$i} {
+        margin: #{$i}px;
+    }
+    .mlr#{$i} {
+        margin-left: #{$i}px;
+        margin-right: #{$i}px;
+    }
+    .mtb#{$i} {
+        margin-top: #{$i}px;
+        margin-bottom: #{$i}px;
+    }
+    .mt#{$i} {
+        margin-top: #{$i}px;
+    }
+    .mr#{$i} {
+        margin-right: #{$i}px;
+    }
+    .ml#{$i} {
+        margin-left: #{$i}px;
+    }
+    .mb#{$i} {
+        margin-bottom: #{$i}px;
+    }
+    .pp#{$i} {
+        padding: #{$i}px;
+    }
+    .plr#{$i} {
+        padding-left: #{$i}px;
+        padding-right: #{$i}px;
+    }
+    .ptb#{$i} {
+        padding-top: #{$i}px;
+        padding-bottom: #{$i}px;
+    }
+    .pt#{$i} {
+        padding-top: #{$i}px;
+    }
+    .pr#{$i} {
+        padding-right: #{$i}px;
+    }
+    .pl#{$i} {
+        padding-left: #{$i}px;
+    }
+    .pb#{$i} {
+        padding-bottom: #{$i}px;
+    }
+}
+
+$colorsMap: (
+    "000",
+    "111",
+    "222",
+    "333",
+    "444",
+    "555",
+    "666",
+    "777",
+    "888",
+    "999",
+    "aaa",
+    "bbb",
+    "ccc",
+    "ddd",
+    "eee",
+    "fff"
+);
+@each $colorV in $colorsMap {
+    .c#{$colorV} {
+        color: ##{$colorV};
+    }
+    .bgc#{$colorV} {
+        background-color: ##{$colorV};
+    }
+}
+
+.b {
+    font-weight: 600;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: right;
+}
+
+.flex {
+    display: flex;
+    align-items: flex-start;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.flex-c {
+    display: flex;
+    align-items: center;
+}
+
+.flex-cb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-cc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-shrink {
+    flex-shrink: 0;
+}

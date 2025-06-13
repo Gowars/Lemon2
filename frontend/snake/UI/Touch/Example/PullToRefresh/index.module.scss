@@ -1,0 +1,22 @@
+.warp {
+    position: relative;
+}
+
+.holder {
+    width: 100%;
+    text-align: center;
+    height: 0;
+    // background-color: pink;
+    overflow: hidden;
+    position: relative;
+    .content {
+        line-height: 60px;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+}
+.container {
+    position: relative;
+    z-index: 1;
+}

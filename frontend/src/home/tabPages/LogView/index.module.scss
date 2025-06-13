@@ -1,0 +1,31 @@
+
+.logBox {
+    background: var(--whiteBgd);
+    border: 1px solid var(--sidebarBgd);
+    min-height: 50vh;
+    word-break: break-word;
+    white-space: pre-wrap;
+    &:hover {
+        box-shadow: 0 0 5px #ccc;
+    }
+    div input {
+        background: #fff;
+        border-radius: 5px !important;
+        height: 24px;
+        color: #000;
+        font-size: 11px;
+        border: 1px solid var(--sidebarBgd);
+        &:focus {
+            border-color: var(--theme-color);
+        }
+    }
+    .logItem {
+        &:hover {
+            box-shadow: 0 0 5px #ccc;
+        }
+    }
+}
+
+.hover:hover {
+    box-shadow: 0 0 5px #ccc;
+}

@@ -1,0 +1,82 @@
+.tips {
+    position: absolute;
+    color: rgb(208, 108, 147);
+    background: currentColor;
+    z-index: 1000;
+    border-radius: 4px;
+    padding: 6px;
+    width: 100%;
+    max-width: 200px;
+
+    &::before {
+        content: '';
+        display: block;
+        height: 0;
+        width: 0;
+        border: 6px solid currentColor;
+    }
+
+    &.top::before {
+        border-top-color: rgba(0, 0, 0, 0);
+        border-right-color: rgba(0, 0, 0, 0);
+        border-left-color: rgba(0, 0, 0, 0);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &.bottom::before {
+        border-bottom-color: rgba(0, 0, 0, 0);
+        border-right-color: rgba(0, 0, 0, 0);
+        border-left-color: rgba(0, 0, 0, 0);
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &.left::before {
+        border-left-color: rgba(0, 0, 0, 0);
+        border-top-color: rgba(0, 0, 0, 0);
+        border-bottom-color: rgba(0, 0, 0, 0);
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &.right::before {
+        border-right-color: rgba(0, 0, 0, 0);
+        border-top-color: rgba(0, 0, 0, 0);
+        border-bottom-color: rgba(0, 0, 0, 0);
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .content {
+        color: #fff;
+    }
+
+    & > span {
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: #fff;
+        width: 1em;
+        height: 1em;
+        line-height: 1;
+        text-align: center;
+    }
+}
+
+.notice {
+    background-color: bisque;
+    color: #000;
+    font-size: 13px;
+    padding: 1em;
+    border-radius: 7px;
+    margin: 10px auto;
+}

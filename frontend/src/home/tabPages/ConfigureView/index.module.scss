@@ -1,0 +1,6 @@
+.preview {
+    font-size: 12px;
+    height: calc(100vh - var(--navHeight));
+    overflow-y: auto;
+    box-sizing: border-box;
+}

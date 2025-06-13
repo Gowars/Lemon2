@@ -1,0 +1,105 @@
+.selector {
+    position: relative;
+    &:hover {
+        background-color: #f2f2f2;
+    }
+    &.active {
+        .arrow {
+            transform: translateY(0%);
+            opacity: 1;
+            box-shadow: 0 2px 5px 5px rgba(0, 0, 0, 0.1);
+            pointer-events: all;
+        }
+    }
+
+    .arrow {
+        z-index: 10;
+        position: absolute;
+        top: 100%;
+        width: 90%;
+        left: 5%;
+        background-color: #fff;
+
+        transform: translateY(20px);
+        pointer-events: none;
+        opacity: 0;
+        box-shadow: 0 2px 5px 5px rgba(0, 0, 0, 0);
+        transition: all 0.3s;
+        border-radius: 5px;
+        color: #333;
+
+        // 三角形
+        &::after {
+            content: '';
+            position: absolute;
+            border-bottom: 5px solid #fff;
+            border-right: 6px solid transparent;
+            border-left: 6px solid transparent;
+            bottom: 100%;
+            left: 50%;
+            transform: translate(-50%, 0px);
+            pointer-events: none;
+            z-index: 10;
+        }
+    }
+
+    .box {
+        overflow-y: scroll;
+    }
+    .input {
+        line-height: 40px;
+        height: 40px;
+        box-sizing: border-box;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+    .item {
+        line-height: 40px;
+        height: 40px;
+        box-sizing: border-box;
+        padding: 0 10px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        &:nth-child(n + 2) {
+            border-top: 1px solid #f2f2f2;
+        }
+        &:hover {
+            background: var(--sidebarItemActive);
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                border-left: 4px solid #ff000080;
+            }
+        }
+        &.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            border-left: 4px solid #ff0000;
+        }
+    }
+}
+
+.context {
+    position: absolute;
+    z-index: 100;
+    min-width: 100px;
+    max-width: 200px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 8px #888;
+    .item {
+        padding: 5px 10px 5px 7px;
+        border-left: 3px solid rgba(0, 0, 0, 0);
+        cursor: pointer;
+        &:hover {
+            border-left-color: red;
+            background-color: #00000010;
+        }
+    }
+}

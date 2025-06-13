@@ -1,0 +1,99 @@
+.main {
+    background-color: #fff;
+    color: #040a23;
+}
+
+.pickerClose {
+    font-weight: normal;
+    font-size: 16px;
+    padding: 0 16px;
+    color: #9aa0b1;
+    &.pickerDone {
+        color: #ca0e2d;
+    }
+    &.disabled {
+        pointer-events: none;
+    }
+}
+
+.pickerButton {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    height: 46px;
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ffffff;
+}
+
+.pickerTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scroll {
+    height: 440px;
+    overflow: scroll;
+    text-align: center;
+}
+
+.dates {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 12px 16px 10px;
+    font-size: 18px;
+    .dateItem {
+        width: 100% * calc(1 / 7);
+        line-height: 26px;
+    }
+}
+
+.month {
+    margin: 20px;
+}
+
+.monthTitle {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    margin: 7px 0 6px;
+}
+
+.monthItems {
+    display: flex;
+    flex-wrap: wrap;
+    .monthItem {
+        margin-top: 7px;
+        height: 44px;
+        line-height: 44px;
+        width: 100% * calc(1 / 7);
+        font-size: 18px;
+        font-weight: 400;
+        cursor: pointer;
+        &.selectRange {
+            background: rgba(202, 14, 45, 0.1);
+        }
+        &.selectStart,
+        &.selectEnd {
+            background-color: #ca0e2d;
+            color: #fff;
+        }
+        &.selectStart {
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+        }
+
+        &.selectEnd {
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+        }
+
+        &.selectDisable {
+            color: #9aa0b1;
+            pointer-events: none;
+        }
+    }
+}

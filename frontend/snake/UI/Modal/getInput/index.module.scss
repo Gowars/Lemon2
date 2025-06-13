@@ -1,0 +1,21 @@
+.wrap {
+    height: 100%;
+    background: #fff;
+    font-size: 16px;
+
+    .tongji {
+        border-top: 10px solid rgb(235, 235, 235);
+        text-align: right;
+        padding: 10px 10px 0;
+    }
+
+    .textarea {
+        padding: 10px;
+    }
+
+    button {
+        border: none;
+        color: green;
+        line-height: 2.6;
+    }
+}

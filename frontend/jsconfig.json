@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "resolveJsonModule": true,
+        "paths": {
+            "@/*": ["./*"]
+        },
+    },
+    "exclude": ["node_modules"],
+    "include": ["src", "typings", "lemon-tools/**/*", "snake/**/*.js", "snake/**/*.jsx"],
+    "typeAcquisition": {
+        "include": ["react", "react-dom"]
+    }
+}

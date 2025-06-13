@@ -1,0 +1,28 @@
+:global {
+    .fixedTop {
+        position: fixed;
+        // 移动端模式
+        // left: 50%;
+        // width: 7.5rem;
+        // margin-left: -3.75rem;
+        left: 0;
+        width: 100%;
+        top: 0px;
+        z-index: 100;
+    }
+
+    // sticky 非fixed状态下
+    .sticky-status-static {
+        // fixedTop 要设置为初始状态
+        // 隐藏holder，但是不能设置为display: none
+        .sticky-holder {
+            height: 0px !important;
+        }
+    }
+
+    .sticky-status-fixed {
+        .sticky-inner-wrapper {
+            @extend .fixedTop;
+        }
+    }
+}

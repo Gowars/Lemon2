@@ -1,0 +1,57 @@
+.codeBox {
+    min-width: 200px;
+    border-radius: 7px;
+    font-size: 11px;
+    position: relative;
+    border: 1px solid var(--sidebarBgd);
+    &.themeFull {
+        overflow: auto;
+        scrollbar-width: thin;
+        height: calc(100vh - 40px);
+        margin: 20px;
+        color: var(--sidebarColor);
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    &.themeAuto {
+        display: block;
+        overflow: hidden;
+        pre,
+        code {
+            // white-space: pre-wrap;
+            box-sizing: border-box;
+        }
+    }
+    .tools {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        display: flex;
+        width: max-content;
+        z-index: 100;
+    }
+    .copy {
+        padding: 5px;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+            background-color: #ddd;
+        }
+        img {
+            display: block;
+        }
+    }
+    &:hover {
+        box-shadow: 0 0 5px #ccc;
+    }
+    pre,
+    code {
+        background: var(--whiteBgd) !important;
+    }
+    pre,
+    code {
+        text-shadow: none !important;
+    }
+}

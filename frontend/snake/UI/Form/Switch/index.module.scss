@@ -1,0 +1,38 @@
+.ui-switch {
+    margin: 0;
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 22px;
+    // border: 1px solid currentColor;
+    background-color: currentColor;
+    outline: none;
+    border-radius: 100px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+    vertical-align: middle;
+    // https://developer.mozilla.org/zh-CN/docs/Web/CSS/padding
+    // https://developer.mozilla.org/zh-CN/docs/Web/CSS/writing-mode
+    // 此种模式，可以让padding-left按照高度计算，以画一个正方形
+    writing-mode: vertical-lr;
+
+    &.checked {
+        &::after {
+            left: 100%;
+            transform: translate(calc(-100% - 2px), 0);
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        border-radius: 100%;
+        transition: all 0.3s;
+        height: calc(100% - 4px);
+        padding-left: calc(100% - 4px);
+        background-color: #fff;
+    }
+}

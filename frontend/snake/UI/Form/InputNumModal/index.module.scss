@@ -1,0 +1,40 @@
+.inputNum {
+    display: flex;
+    flex-wrap: wrap;
+    user-select: none;
+    & > button {
+        width: 33.333%;
+        height: 3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: pink;
+        border-right: 1px solid #fff;
+        border-top: 1px solid #fff;
+        box-sizing: border-box;
+        &:nth-child(3n) {
+            border-right: none;
+        }
+    }
+}
+
+.input {
+    border: 1px solid;
+    &.placeholder {
+        color: gray;
+    }
+    .cursor {
+        padding-left: 1px;
+        background: red;
+        animation: cursorAnimation 1s infinite;
+        @keyframes cursorAnimation {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    }
+}

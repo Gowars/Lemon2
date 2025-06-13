@@ -1,0 +1,274 @@
+@use "sass:math";
+
+@import "./size.scss";
+@import "./color.scss";
+
+// PC样式
+@mixin mediaForPC() {
+    @media (min-width: 640px) {
+        @content;
+    }
+}
+// 手机样式
+@mixin mediaForPhone() {
+    @media (max-width: 640px) {
+        @content;
+    }
+}
+
+// 移动设备
+@mixin phone() {
+    .device-phone {
+        @content;
+    }
+}
+
+// pc设备
+@mixin pc() {
+    .device-pc {
+        @content;
+    }
+}
+
+@mixin scroll() {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+@mixin articleContent() {
+    font-size: 14px;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+// 1px边框
+@mixin border($bgd: #000) {
+    height: 1px;
+    transform: scaleY(0.5);
+    background: $bgd;
+}
+
+// 1px边框
+@mixin border1px($direction: all, $color: #000, $style: solid) {
+    @include mediaForPC() {
+        @if $direction == all {
+            border: 1px $style $color;
+        } @else {
+            border-#{$direction}: 1px $style $color;
+        }
+    }
+    @include mediaForPhone() {
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            transform: scale(0.5, 0.5);
+            transform-origin: left top;
+            pointer-events: none;
+            @if $direction == all {
+                border: 1px $style $color;
+            }
+            @if $direction == top {
+                border-top: 1px $style $color;
+            }
+            @if $direction == left {
+                border-left: 1px $style $color;
+            }
+            @if $direction == bottom {
+                border-bottom: 1px $style $color;
+            }
+            @if $direction == right {
+                border-right: 1px $style $color;
+            }
+        }
+    }
+}
+
+@mixin noScroll() {
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+}
+
+// 背景
+@mixin bgdCover() {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@mixin heightLine($height) {
+    height: $height;
+    line-height: $height;
+}
+
+// 文本显示几行
+@mixin text-line($num: 1) {
+    @if ($num == 1) {
+        text-overflow: ellipsis; /*这就是省略号喽*/
+        overflow: hidden; /*设置超过的隐藏*/
+        white-space: nowrap; /*设置不折行*/
+    } @else {
+        display: -webkit-box;
+        overflow: hidden;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: $num;
+    }
+}
+
+// hover显示box-shadow
+@mixin hoverBoxShaow($width, $color) {
+    transition: box-shadow 0.3s;
+    &:hover {
+        box-shadow: 0 0 $width $color;
+    }
+}
+
+// 设置滚动条样式
+@mixin scrollBar() {
+    // 滚动条背景
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+        background: rgba(0, 0, 0, 0);
+    }
+
+    // 滚动条
+    ::-webkit-scrollbar-thumb {
+        background: rgb(245, 94, 118);
+    }
+}
+
+@mixin backgroundCenter {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+// 使用 inline-block 布局，可以左右流排布
+@mixin layout($num, $fz: 16px, $class: grid) {
+    .#{$class}-format-#{$num} {
+        // 生成布局
+        display: block;
+        overflow: hidden;
+        font-size: 0;
+        @for $i from 1 through $num {
+            & > .#{$class}-item-#{$i} {
+                display: inline-block;
+                width: 100% * calc($i / $num);
+                font-size: $fz;
+                box-sizing: border-box;
+                vertical-align: middle;
+            }
+            // 左偏移
+            & > .#{$class}-offset-#{$i} {
+                margin-left: 100% * calc($i / $num);
+            }
+            // 右偏移
+            & > .#{$class}-offset-right-#{$i} {
+                margin-right: 100% * calc($i / $num);
+            }
+        }
+    }
+}
+
+/**
+layout快速布局
+$rowNums: 每行元素个数
+$columnSpace 列间距
+$columnSpace 列间距
+$rowSpace 行间距
+$paddingLeftRight 左右间距
+$border 指定边框
+*/
+@mixin layoutV2(
+    $rowNums: 2,
+    $columnSpace: 10px,
+    $rowSpace: $columnSpace,
+    $padding: $columnSpace,
+    $border: none,
+    $ratio: 100%
+) {
+    $name: "layout-cell";
+    :global {
+        display: flex;
+        flex-flow: wrap;
+        margin: $padding;
+        @content;
+        .#{$name} {
+            width: calc(
+                #{math.div(100, $rowNums)}% -
+                    #{math.div($columnSpace * ($rowNums - 1), $rowNums)}
+            );
+            position: relative;
+            margin: $rowSpace $columnSpace 0 0;
+            box-sizing: border-box;
+            &::after {
+                content: "";
+                display: block;
+                padding-top: $ratio;
+            }
+        }
+        .#{$name}:nth-child(#{$rowNums}n) {
+            margin-right: 0;
+        }
+        @for $i from 1 through $rowNums {
+            .#{$name}:nth-child(#{$i}) {
+                margin-top: 0;
+                // 处理边框
+                @if $border != none {
+                    border-top: 0;
+                    &::before {
+                        border-top: $border;
+                    }
+                }
+            }
+        }
+
+        // 处理边框
+        @if $border != none {
+            .#{$name}::before {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                position: absolute;
+                border-right: $border;
+                border-bottom: $border;
+                box-sizing: border-box;
+            }
+            .#{$name}:nth-child(#{$rowNums}n + 1) {
+                &::before {
+                    border-left: $border;
+                }
+            }
+        }
+    }
+}
+
+@mixin layoutV2Mini($rowNums: 2, $columnSpace: 10px, $rowSpace: $columnSpace) {
+    $name: "layout-cell";
+    display: flex;
+    flex-flow: wrap;
+    @content;
+    .#{$name} {
+        width: calc(
+            #{(100 / $rowNums)}% - #{$columnSpace * ($rowNums - 1) / $rowNums}
+        );
+        position: relative;
+        margin: $rowSpace $columnSpace 0 0;
+        box-sizing: border-box;
+    }
+    .#{$name}:nth-child(#{$rowNums}n) {
+        margin-right: 0;
+    }
+}

@@ -1,0 +1,61 @@
+.btn {
+    padding: 0 1em;
+    // 奇怪，在iPhone上必须设置background，才会显示正常
+    outline: none;
+    border: none;
+    line-height: 2.6;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    font-size: inherit;
+
+    @mixin btnTheme($bgd: #fff, $color: #fff) {
+        background: $bgd;
+        border-color: $bgd;
+        color: $color;
+    }
+
+    &:disabled {
+        color: #000;
+        background: #eee;
+        cursor: not-allowed;
+    }
+
+    &.theme-common {
+        background: var(--theme-color);
+        color: #fff;
+        transition: box-shadow 0.3s;
+        &:hover {
+            box-shadow: 0 0 3px var(--theme-color);
+        }
+    }
+
+    &.theme-cancel {
+        color: var(--theme-color);
+        background: none;
+        border: 1px solid currentColor;
+    }
+
+    &.block {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    span {
+        // display: flex;
+        // align-items: center;
+        // text-align: center;
+        &.loading::before {
+            content: '';
+            display: inline-block;
+            vertical-align: top;
+            height: 1.6em;
+            width: 1.6em;
+            background: url('./loading.svg');
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-size: 1.4em auto;
+        }
+    }
+}

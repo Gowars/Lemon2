@@ -1,0 +1,16 @@
+@import "./var";
+
+@include layout(2);
+@include layout(3);
+@include layout(4);
+@include layout(8);
+@include layout(12);
+
+.flex-layout {
+    display: flex;
+    @for $i from 1 through 10 {
+        & > .flex-item-#{$i} {
+            flex: $i;
+        }
+    }
+}

@@ -1,0 +1,151 @@
+$zIndex: 1000;
+$transitionTime: 0.3s;
+
+// translate3d(0, 0, 0)会导致在pc上字体模糊，translateZ导致的
+@function trans($x, $y) {
+    @return translateX($x) translateY($y);
+}
+
+:export {
+    zIndex: $zIndex;
+}
+
+.modal-wrap {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.modal-layer {
+    height: 100%;
+    width: 100%;
+    transition: opacity $transitionTime;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-center-content {
+    position: absolute;
+    pointer-events: all;
+    // 在left: 50% 的加持下，div的默认宽度只有50%。看起来是浏览会让div的渲染宽度充满可充满的区域
+    width: fit-content;
+    left: 50%;
+    top: 50%;
+    transform: trans(-50%, -50%);
+}
+
+.modal-bottom-content {
+    position: absolute;
+    pointer-events: all;
+    // 在left: 50% 的加持下，div的默认宽度只有50%。看起来是浏览会让div的渲染宽度充满可充满的区域
+    width: fit-content;
+    width: 100%;
+    left: 50%;
+    bottom: 0;
+    transform: trans(-50%, 0%);
+}
+
+.modal-top-content {
+    position: absolute;
+    pointer-events: all;
+    // 在left: 50% 的加持下，div的默认宽度只有50%。看起来是浏览会让div的渲染宽度充满可充满的区域
+    width: fit-content;
+    width: 100%;
+    left: 0%;
+    top: 0;
+}
+
+.modal-fullScreen {
+    width: 100%;
+    height: 100%;
+}
+
+/**
+ * $name: className
+ * $start: 开始位置
+ * $end: 结束为止
+ * $opacity: 是否对content做opacity渐变
+ */
+
+@mixin Modal($name, $start, $end, $opacity: false, $position: center) {
+    .modal-animation-type-#{$name} {
+        .modal-#{$position}-content {
+            transition: transform $transitionTime;
+            transition-property: transform, opacity;
+
+            @if $opacity == true {
+                opacity: 1;
+            }
+        }
+
+        &.modal-enter {
+            .modal-layer {
+                opacity: 0;
+            }
+            .modal-#{$position}-content {
+                transform: $start;
+
+                @if $opacity == true {
+                    opacity: 0;
+                }
+            }
+        }
+        &.modal-leave {
+            .modal-layer {
+                opacity: 0;
+            }
+            .modal-#{$position}-content {
+                transform: $end;
+                @if $opacity == true {
+                    opacity: 0;
+                }
+            }
+        }
+        @content;
+    }
+}
+
+// 上进下出
+@include Modal(ud, trans(-50%, calc(-50vh - 100%)), trans(-50%, 55vh));
+
+// 下进上出
+@include Modal(du, trans(-50%, calc(-50vh - 100%)), trans(-50%, 55vh));
+
+// 上进上出
+@include Modal(uu, trans(-50%, calc(-50vh - 100%)), trans(-50%, calc(-50vh - 100%)));
+
+@include Modal(uu, trans(0%, -200%), trans(0%, -200%), false, top);
+
+// 下进下出
+@include Modal(dd, trans(-50%, 100%), trans(-50%, 100%), false, bottom);
+
+// 下进下出
+@include Modal(dd, trans(-50%, 50vh), trans(-50%, 50vh));
+
+// 左进左出
+@include Modal(ll, trans(calc(-50vw - 100%), -50%), trans(calc(-50vw - 100%), -50%));
+
+// 右进右出
+@include Modal(rr, trans(60vw, -50%), trans(60vw, -50%));
+
+// 右进左出
+@include Modal(rl, trans(calc(-50vw - 100%), -50%), trans(60vw, -50%));
+
+// 左进右出
+@include Modal(lr, trans(calc(-50vw - 100%), -50%), trans(60vw, -50%));
+
+// sale 小 -> 大
+@include Modal(sb, trans(-50%, -50%) scale3d(0.8, 0.8, 1), trans(-50%, -50%) scale3d(1.2, 1.2, 1), true);
+
+// scale 大 -> 大
+@include Modal(bb, trans(-50%, -50%) scale3d(1.2, 1.2, 1), trans(-50%, -50%) scale3d(1.2, 1.2, 1), true);
+
+// scale 小 -> 小
+@include Modal(ss, trans(-50%, -50%) scale3d(0.8, 0.8, 1), trans(-50%, -50%) scale3d(0.8, 0.8, 1), true);
+
+// scale 小 -> 小
+@include Modal(bs, trans(-50%, -50%) scale3d(1.2, 1.2, 1), trans(-50%, -50%) scale3d(0.8, 0.8, 1), true);

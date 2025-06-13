@@ -1,0 +1,101 @@
+html, body {
+    --theme-color: #62b942;
+    --theme-text-color: #fff;
+    --theme-color-light1: #c7e6ab;
+    --hoverColor: #93c567;
+    --sidebarColor: #000;
+    --sidebarBgd: #f2f2f2;
+    --whiteBgd: #fff;
+    --app-text-color: #000;
+    --app-text-gray-color: #666;
+}
+
+html {
+    background-color: var(--whiteBgd);
+    color: var(--app-text-color);
+    height: 100vh;
+    overflow: hidden;
+    font-size: 12px;
+    input,
+    textarea {
+        color: #000 !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    html, body {
+        --sidebarColor: #fff;
+        --sidebarBgd: #444;
+        --whiteBgd: #333;
+        --app-text-color: #fff;
+        --app-text-gray-color: #ccc;
+    }
+}
+
+:global {
+    .app-text-gray {
+        color: var(--app-text-gray-color);
+    }
+}
+
+.app {
+    font-size: 12px;
+    display: flex;
+}
+
+:global {
+    .no-select {
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: default;
+    }
+
+    .no-scrollbar {
+        overflow: auto;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
+
+.sidebar {
+    width: 200px;
+    background-color: var(--sidebarBgd);
+    color: var(--sidebarColor);
+    padding: 38px 10px 10px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    height: calc(100vh - var(--navHeight));
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .sidebarItem {
+        padding: 8px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        border-radius: 7px;
+        &:hover {
+            // background: #ccc;
+            box-shadow: 0 0 5px #aaa;
+        }
+        &.active {
+            background-color: var(--theme-color);
+            color: var(--theme-text-color);
+            font-weight: 600;
+        }
+    }
+    .bottomPannel {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        bottom: 0;
+        box-sizing: border-box;
+        left: 0;
+        padding: 10px;
+        display: flex;
+    }
+}

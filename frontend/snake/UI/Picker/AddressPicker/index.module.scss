@@ -1,0 +1,31 @@
+.main {
+    background-color: #fff;
+}
+
+.flex {
+    display: flex;
+}
+
+.pickerButton {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    height: 46px;
+    line-height: 46px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ffffff;
+    .pickerClose {
+        font-weight: normal;
+        padding: 0 16px;
+        color: #9aa0b1;
+        &.pickerDone {
+            color: #ca0e2d;
+        }
+    }
+    .pickerTitle {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,14 @@
+.contianer {
+    position: relative;
+    height: 3em;
+    color: red;
+    line-height: 3;
+    overflow: hidden;
+
+    & > div {
+        position: absolute;
+        left: 100%;
+        width: max-content;
+        height: 100%;
+    }
+}
