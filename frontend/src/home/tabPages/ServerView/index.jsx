@@ -21,7 +21,7 @@ import {
     onDelSub,
     onEditSub,
 } from "@/src/home/components/SubscriptionView";
-import { language } from "@/src/i18n/en";
+import { language } from "@/src/i18n";
 import { MoreEditView } from "@/src/home/components/MoreEditView";
 import { Form, Input } from "@/snake/UI/Form";
 import { LogView } from "../LogView";
@@ -212,7 +212,7 @@ export function ServerView() {
                     key="manual"
                     editList={[
                         {
-                            name: "Add Node",
+                            name: language.AddNode,
                             onClick: (d, close) => {
                                 openAddModal();
                                 close();

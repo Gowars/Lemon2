@@ -14,6 +14,7 @@ import { SwitchMulti } from "../../components/SwitchMulti";
 import Tag from "@/snake/UI/Tag";
 import { NoDataView } from "../../components/NoData";
 import { CopyView } from "../../components/CopyView";
+import { language } from "@/src/i18n";
 
 class ProxyProgress {
     constructor() {
@@ -144,9 +145,9 @@ function LogItemStatus({ appName, mini = false }) {
         x.set(appName, v)
     }
     const data = [
-        { value: 0, text: 'Proxy', theme: 'light'  },
-        { value: 1, text: 'Direct', theme: 'warning'  },
-        { value: 2, text: 'Block', theme: 'danger'  },
+        { value: 0, text: language.Proxy, theme: 'light'  },
+        { value: 1, text: language.Direct, theme: 'warning'  },
+        { value: 2, text: language.Block, theme: 'danger'  },
     ]
     if (mini) {
         const item = data.find(i => i.value == state.status) || data[0]
@@ -184,7 +185,7 @@ function ModalView({ i }) {
 
 function openLogModal({ i }) {
     Modal.open(
-        <div style={{ background: '#fff', width: '80vw', maxHeight: '85vh', overflow: 'auto' }} className="br10 pp10">
+        <div style={{ background: 'var(--whiteBgd)', width: '80vw', maxHeight: '85vh', overflow: 'auto' }} className="br10 pp10">
             <ModalView i={i} />
         </div>, {
         position: 'center',

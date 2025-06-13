@@ -10,7 +10,7 @@ import { Modal } from "@/snake/main";
 import { safeParse } from "@/src/home/helper";
 import { FieldView } from "@/src/home/components/FieldView";
 import { selectNode, updateGFW } from "@/src/home/service";
-import { language } from "@/src/i18n/en";
+import { language } from "@/src/i18n";
 
 import S from "./index.module.scss";
 
@@ -68,7 +68,7 @@ export function ConfigureView() {
             <div className="ui-flex">
                 <span className="flex1"></span>
                 <Button className="mb10" onClick={submit}>
-                    Save
+                    {language.Save}
                 </Button>
             </div>
             <Form value={state} onChange={(v) => setState(v)} noRoot>

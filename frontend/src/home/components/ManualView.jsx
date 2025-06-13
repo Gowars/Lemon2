@@ -12,7 +12,7 @@ import { uuid32 } from "@/lemon-tools/uuid";
 import { FieldView } from "./FieldView";
 import { createVmess, safeParse } from "../helper";
 import { convertConfig2vmess, selectNode } from "../service";
-import { language } from "@/src/i18n/en";
+import { language } from "@/src/i18n";
 
 export function ManualView(props) {
     const appState = useAppState();
@@ -85,7 +85,7 @@ export function ManualView(props) {
                     className="mr10 modal-close"
                     theme="cancel"
                 >
-                    Cancel
+                    {language.Cancel}
                 </Button>
                 <Button onClick={submit}>{language.Save}</Button>
             </div>

@@ -10,7 +10,7 @@ import Button from "@/snake/UI/Button";
 import { Modal } from "@/snake/main";
 import { uuid32 } from "@/lemon-tools/uuid";
 import { FieldView } from "./FieldView";
-import { language } from "@/src/i18n/en";
+import { language } from "@/src/i18n";
 
 export function onDelSub(id) {
     Modal.confirm(language.AreYouSureYouWantToDelete, () => {

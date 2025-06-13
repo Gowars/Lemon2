@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { interval } from "@/src/home/helper";
 import { callGo } from "@/src/home/core";
 import { CodeBlockView } from "@/src/home/components/CodeBlockView";
-import { language } from "@/src/i18n/en";
+import { language } from "@/src/i18n";
 
 export function CopyProxyView() {
     const appState = useAppState();

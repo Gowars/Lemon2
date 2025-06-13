@@ -28,7 +28,7 @@ import { AboutView } from "./tabPages/AboutView";
 import { SwitchMulti } from "./components/SwitchMulti";
 import { PacView } from "./tabPages/PacView";
 import { NetStatView } from "./components/NetStatView";
-import { language } from "../i18n/en";
+import { language } from "../i18n";
 import { Events } from "@wailsio/runtime";
 import { Modal } from "@/snake/main";
 
@@ -46,11 +46,11 @@ const TabEnmu = {
 };
 
 const tabs = [
-    { name: "🍋 Servers", id: TabEnmu.SERVER, View: ServerView },
-    { name: "🛠️ Configure", id: TabEnmu.CONFIG, View: ConfigureView },
-    { name: "🍪 App Network", id: TabEnmu.AppNetwork, View: AppRouteMannagerView },
+    { name: `🍋 ${language.Servers}`, id: TabEnmu.SERVER, View: ServerView },
+    { name: `🛠️ ${language.Configure}`, id: TabEnmu.CONFIG, View: ConfigureView },
+    { name: `🍪 ${language.AppNetwork}`, id: TabEnmu.AppNetwork, View: AppRouteMannagerView },
     {
-        name: "📖 View V2ray Config",
+        name: `📖 ${language.ViewV2rayConfig}`,
         id: TabEnmu.V2RAY,
         View: () => {
             const appState = useAppState();
@@ -62,30 +62,30 @@ const tabs = [
             );
         },
     },
-    { name: "🛞 View Pac Script", id: TabEnmu.PacView, View: PacView },
-    { name: "🍒 Copy Proxy", id: TabEnmu.CopyProxy, View: CopyProxyView },
-    { name: "📱 Share QR Code", id: TabEnmu.ShareQR },
-    { name: "📋 Log", id: TabEnmu.Log, View: LogView },
-    { name: "✌️ About", id: TabEnmu.ABOUT, View: AboutView },
+    { name: `🛞 ${language.ViewPacScript}`, id: TabEnmu.PacView, View: PacView },
+    { name: `🍒 ${language.CopyProxy}`, id: TabEnmu.CopyProxy, View: CopyProxyView },
+    { name: `📱 ${language.ShareQRCode}`, id: TabEnmu.ShareQR },
+    { name: `📋 ${language.Log}`, id: TabEnmu.Log, View: LogView },
+    { name: `✌️ ${language.About}`, id: TabEnmu.ABOUT, View: AboutView },
 ];
 
 const pacTabs = [
     {
         value: "global",
-        text: "Global",
+        text: language.Global,
         desc: language.IgnorePacRulesAndForceProxyMode,
     },
     {
         value: "proxy",
-        text: "Proxy",
+        text: language.Proxy,
         desc: language.PacUsesProxyByDefaultSetPacDirectRulesToSpecifyDomainsThatDoNotUseProxy,
     },
     {
         value: "direct",
-        text: "Direct",
+        text: language.Direct,
         desc: language.PacDoesNotUseProxyByDefaultSetPacProxyRulesToSpecifyDomainsThatUseProxy,
     },
-    { value: "off", text: "OFF", desc: language.DisableProxy },
+    { value: "off", text: language.Off, desc: language.DisableProxy },
 ];
 
 export function Page() {
@@ -173,7 +173,7 @@ export function Page() {
                   <SwitchCore value={appState.on} onChange={handleToggle} />
               </div> */}
                 </div>
-                <div className="mb20 mt15 fs10">
+                <div className="mb20 mt15 fs12">
                     <SwitchMulti
                         data={pacTabs}
                         value={appState.pacMode}

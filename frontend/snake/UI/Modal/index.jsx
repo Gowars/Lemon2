@@ -9,7 +9,7 @@ import CModal from './component';
 
 import S from './index.module.scss';
 import { openBottom } from './openBottom';
-import { language } from '@/src/i18n/en';
+import { language } from '@/src/i18n';
 
 /**
  * [topMessage 顶部消息提示]
