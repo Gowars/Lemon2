@@ -15,9 +15,9 @@ BACKGROUND_IMAGE="background.png"         # 背景图片（可选，640x480，72
 TEMP_DIR="/tmp/dmg-${APP_NAME}"           # 临时目录
 DMG_SIZE="100"                            # DMG 大小（MB，需大于 .app 大小）
 
+rm -r frontend/dist
 rm -r bin/*.dmg
 mkdir ./release
-rm -r ./release/*
 
 codesign --force --deep --sign "Apple Development: wang king" $APP_PATH
 
