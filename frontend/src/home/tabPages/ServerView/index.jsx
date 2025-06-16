@@ -69,7 +69,7 @@ function ServerNodeView(props) {
             )}
         >
             <span className="app-text-gray">{index + 1}.</span>
-            <span className="flex1 mr5 ml5">{i.ps}</span>
+            <span className={cx("flex1 mr5 ml5", S.ps)}>{i.ps}</span>
             <span className="app-text-gray fs10">{props.ping}</span>
             {i.manual && (
                 <MoreEditView

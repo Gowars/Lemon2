@@ -173,7 +173,7 @@ export function Page() {
                   <SwitchCore value={appState.on} onChange={handleToggle} />
               </div> */}
                 </div>
-                <div className="mb20 mt15 fs12">
+                <div className="mb20 mt15 fs11">
                     <SwitchMulti
                         data={pacTabs}
                         value={appState.pacMode}

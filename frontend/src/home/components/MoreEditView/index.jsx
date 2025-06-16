@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import S from "./index.module.scss";
 import HotKey from "@/lemon-tools/hotkeys";
+import cx from "@/lemon-tools/cx";
 
 export function MoreEditView(props) {
     const [isShow, update] = useState(false);
@@ -33,7 +34,7 @@ export function MoreEditView(props) {
 
     return (
         <div className={S.view} ref={dRef}>
-            <div onClick={handleClick} className={S.more}>
+            <div onClick={handleClick} className={cx(S.more)}>
                 :
             </div>
             {isShow && (

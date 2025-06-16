@@ -94,4 +94,19 @@ export const en = {
     Log: "Log",
     /**  */
     About: "About",
+
+    /** Local Http Listen Port */
+    LocalHttpListenPort: 'Local Http Listen Port',
+    /** Local Sock Listen Port */
+    LocalSockListenPort: 'Local Sock Listen Port',
+    /** Pac Server Listen Port */
+    PacServerListenPort: 'Pac Server Listen Port',
+    /** GFW List Url */
+    GFWListUrl: 'GFW List Url',
+    /** Pac Proxy Rules */
+    PacProxyRules: 'Pac Proxy Rules',
+    /** Pac Direct Rules */
+    PacDirectRules: 'Pac Direct Rules',
+    /** Remote Pac Url */
+    RemotePacUrl: 'Remote Pac Url',
 };

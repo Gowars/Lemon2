@@ -14,6 +14,9 @@
     &.active {
         background: var(--theme-color);
         --app-text-gray-color: #f2f2f2;
+        .ps {
+            color: #fff;
+        }
     }
 }
 

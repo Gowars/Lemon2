@@ -1,5 +1,5 @@
 .tabs {
-    background-color: rgb(235, 235, 235);
+    background-color: rgba(98, 185, 66, .2);
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -20,11 +20,7 @@
             margin-left: 2px;
         }
         &:hover {
-            // background: var(--hoverColor);
-            // color: #fff;
-            // border-radius: 5px;
-            // box-shadow: 0 0 3px #888;
-            font-weight: 600;
+            font-weight: 500;
         }
         &.active {
             background: var(--theme-color);

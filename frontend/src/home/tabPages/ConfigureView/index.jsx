@@ -72,24 +72,24 @@ export function ConfigureView() {
                 </Button>
             </div>
             <Form value={state} onChange={(v) => setState(v)} noRoot>
-                <FieldView title="Local Http Listen Port:">
+                <FieldView title={language.LocalHttpListenPort}>
                     <Input name="httpPort" placeholder="" className={S.flex1} />
                 </FieldView>
-                <FieldView title="Local Sock Listen Port:">
+                <FieldView title={language.LocalSockListenPort}>
                     <Input
                         name="socksPort"
                         placeholder=""
                         className={S.flex1}
                     />
                 </FieldView>
-                <FieldView title="Pac Server Listen Port:">
+                <FieldView title={language.PacServerListenPort}>
                     <Input name="pacPort" placeholder="" className={S.flex1} />
                 </FieldView>
                 <FieldView title="V2ray IP" tips="0.0.0.0/127.0.0.1">
                     <Input name="v2rayIP" placeholder="" className={S.flex1} />
                 </FieldView>
                 <FieldView
-                    title="GFW List Url"
+                    title={language.GFWListUrl}
                     tips={
                         <span className="pointer" onClick={handleGFWUpdate}>
                             {language.Refresh}
@@ -105,7 +105,7 @@ export function ConfigureView() {
                     />
                 </FieldView>
                 <FieldView
-                    title="Pac Proxy Rules"
+                    title={language.PacProxyRules}
                     tips={language.UsefulInDirectMode}
                 >
                     <Textarea
@@ -117,7 +117,7 @@ export function ConfigureView() {
                     />
                 </FieldView>
                 <FieldView
-                    title="Pac Direct Rules"
+                    title={language.PacDirectRules}
                     tips={language.UsefulInProxyMode}
                 >
                     <Textarea
@@ -128,7 +128,7 @@ export function ConfigureView() {
                         className={S.flex1}
                     />
                 </FieldView>
-                <FieldView title="Remote Pac Url" tips="">
+                <FieldView title={language.RemotePacUrl} tips="">
                     <Input
                         name="remotePacUrl"
                         placeholder="http://127.0.0.1:80/proxy.js"

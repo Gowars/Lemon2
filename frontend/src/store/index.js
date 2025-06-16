@@ -26,9 +26,9 @@ function getInitState() {
         config: {}, // 当前配置信息
         manualConfig: [], // 手动添加的配置
         remotePacUrl: "",
-        httpPort: 1087,
+        httpPort: 1078,
         socksPort: 7890,
-        pacPort: 9988,
+        pacPort: 7891,
         v2rayIP: "0.0.0.0",
         gfwUrl: "https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt",
         pacDirect: "[]",

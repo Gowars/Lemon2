@@ -35,17 +35,17 @@ export const zh = {
     /** Use the current device terminal */
     UseTheCurrentDeviceTerminal: "当前设备终端使用",
     /** Add HTTP proxy in the current device app */
-    AddHTTPProxyInTheCurrentDeviceApp: "当前设备App内添加HTTP代理",
+    AddHTTPProxyInTheCurrentDeviceApp: "当前设备App添加HTTP代理",
     /** Add Socket proxy in the current device app */
-    AddSocketProxyInTheCurrentDeviceApp: "当前设备App内添加Socket代理",
+    AddSocketProxyInTheCurrentDeviceApp: "当前设备App添加Socks代理",
     /** Add Pac in the current device app */
-    AddPacInTheCurrentDeviceApp: "当前设备App内添加Pac",
+    AddPacInTheCurrentDeviceApp: "当前设备App添加Pac",
     /** Use other devices in the same wifi terminal */
-    UseOtherDevicesInTheSameWifiTerminal: "相同wifi内其他设备终端使用",
+    UseOtherDevicesInTheSameWifiTerminal: "相同wifi其他设备终端使用",
     /** Add HTTP proxy in other devices in the same wifi app */
-    AddHTTPProxyInOtherDevicesInTheSameWifiApp: "相同wifi内其他设备App内添加HTTP代理",
+    AddHTTPProxyInOtherDevicesInTheSameWifiApp: "相同wifi其他设备App添加HTTP代理",
     /** Add Socket proxy in other devices in the same wifi app */
-    AddSocketProxyInOtherDevicesInTheSameWifiApp: "相同wifi内其他设备App内添加Socket代理",
+    AddSocketProxyInOtherDevicesInTheSameWifiApp: "相同wifi其他设备App添加Socks代理",
     /** Add Pac in other devices in the same wifi */
     AddPacInOtherDevicesInTheSameWifi: "相同wifi内其他设备添加Pac",
 
@@ -59,9 +59,9 @@ export const zh = {
     DisableProxy: "禁用代理",
 
     /** Useful in Direct mode */
-    UsefulInDirectMode: "Direct模式下有用",
+    UsefulInDirectMode: "直连模式下生效",
     /** Useful in Proxy mode */
-    UsefulInProxyMode: "Proxy模式下有用",
+    UsefulInProxyMode: "代理模式下生效",
     /** Startup failed, the port is occupied */
     StartupFailedThePortIsOccupied: "启动失败，端口已被占用",
 
@@ -94,4 +94,19 @@ export const zh = {
     Log: "日志",
     /** About */
     About: "关于",
+
+    /** Local Http Listen Port */
+    LocalHttpListenPort: '本地 Http 监听端口',
+    /** Local Sock Listen Port */
+    LocalSockListenPort: '本地 Socks 监听端口',
+    /** Pac Server Listen Port */
+    PacServerListenPort: 'Pac 服务监听端口',
+    /** GFW List Url */
+    GFWListUrl: 'GFW 列表 URL',
+    /** Pac Proxy Rules */
+    PacProxyRules: 'Pac 代理规则',
+    /** Pac Direct Rules */
+    PacDirectRules: 'Pac 直连规则',
+    /** Remote Pac Url */
+    RemotePacUrl: '远程 Pac URL',
 };
