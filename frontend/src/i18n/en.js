@@ -109,4 +109,6 @@ export const en = {
     PacDirectRules: 'Pac Direct Rules',
     /** Remote Pac Url */
     RemotePacUrl: 'Remote Pac Url',
+
+    VerifyWhichRuleTheDomainNameHits: "Verify which rule the domain name hits",
 };

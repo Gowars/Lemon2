@@ -109,4 +109,6 @@ export const zh = {
     PacDirectRules: 'Pac 直连规则',
     /** Remote Pac Url */
     RemotePacUrl: '远程 Pac URL',
+
+    VerifyWhichRuleTheDomainNameHits: "校验域名命中哪条规则",
 };

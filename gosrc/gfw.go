@@ -1,7 +1,6 @@
 package gosrc
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -18,18 +17,7 @@ func CreateGfwServer() *GfwServer {
 }
 
 func (g *GfwServer) HandleGFW(bodyString string) {
-	fmt.Println("bodyString", bodyString)
-	// 2. Base64 解码
-	// Base64 解码函数需要 byte 切片作为输入，返回 byte 切片和可能的错误
-	decodedBytes, err := base64.StdEncoding.DecodeString(bodyString)
-	if err != nil {
-		fmt.Printf("gfw Error decoding base64: %v\n", err)
-		return
-	}
-
-	decodedText := string(decodedBytes)
-
-	WriteRootFile("gfw.txt", decodedText)
+	WriteRootFile("gfw.txt", bodyString)
 }
 
 func (g *GfwServer) ReadGFW() string {
@@ -65,7 +53,7 @@ func (g *GfwServer) ParseGFW(proxyRules string, directRules string) (string, str
 	// JS regex /^@+\|+/g 对应 Go regex `^@+\\|+` (需要转义 |)
 	// JS regex /^\|+/g 对应 Go regex `^\\|+` (需要转义 |)
 	directReplaceRegex := regexp.MustCompile(`^@+\|+`)
-	proxyReplaceRegex := regexp.MustCompile(`^\|+`)
+	// proxyReplaceRegex := regexp.MustCompile(`^\|+`)˜
 
 	// 3. 按行分割并解析规则
 	lines := strings.Split(g.ReadGFW(), "\n")
@@ -86,12 +74,7 @@ func (g *GfwServer) ParseGFW(proxyRules string, directRules string) (string, str
 			cleanedItem := directReplaceRegex.ReplaceAllString(item, "")
 			dRules = append(dRules, cleanedItem) // 添加到 direct 列表
 		} else {
-			// 代理规则 (proxy)
-			// 移除开头的 |
-			// JS: item.replace(/^\|+/g, '')
-			// 使用编译好的正则表达式进行替换
-			cleanedItem := proxyReplaceRegex.ReplaceAllString(item, "")
-			pRules = append(pRules, cleanedItem) // 添加到 proxy 列表
+			pRules = append(pRules, item) // 添加到 proxy 列表
 		}
 	}
 

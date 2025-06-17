@@ -293,14 +293,23 @@ export function showSelectedSever() {
 }
 
 export function updateGFW(url) {
-    if (!url) return;
+    if (!url) {
+        // 如果url为空，就清空规则
+        emitGoEvent({
+            name: "handle-gfw",
+            data: "",
+            callback: restartServer,
+        });
+        return;
+    }
+
     url = addQuery(url, { __time__: Date.now() });
     fetch(url)
         .then((res) => res.text())
         .then((text) => {
             emitGoEvent({
                 name: "handle-gfw",
-                data: text,
+                data: atob(text),
                 callback: restartServer,
             });
         });

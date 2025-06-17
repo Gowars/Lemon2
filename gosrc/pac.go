@@ -113,8 +113,21 @@ func (ins *PacServer) CreatePacFile(IP string, filename string) {
 var proxy = 'SOCKS5 {{.SocksAddress}}; SOCKS {{.SocksAddress}};'
 var direct = 'DIRECT;'
 var pacMode = '{{.pacMode}}';
+var whichRuleIsWork = {
+    data: {},
+    msg: '',
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 function checkMatch(url, host, rule) {
+    if (/\|{2}/.test(rule)) {
+      rule = rule.replace(/\|{2}/, '')
+      rule = escapeRegExp(rule)
+      return new RegExp('^(.*\\.)?' + rule + '$').test(host)
+    }
     if (/^https?:/.test(rule)) {
         return url.startsWith(rule)
     }
@@ -123,21 +136,38 @@ function checkMatch(url, host, rule) {
 
 function FindProxyForURL(url, host) {
     if (pacMode == 'global') {
+        whichRuleIsWork.msg = 'Hitting the PAC global mode'
 		return proxy;
 	}
 	for (var i = 0; i < pacDirectRules.length; i++) {
 		if (checkMatch(url, host, pacDirectRules[i])) {
+            whichRuleIsWork.msg = 'Hitting the PAC direct rules'
+            whichRuleIsWork.data = {
+                url: url,
+                host: host,
+                rule: pacDirectRules[i],
+                index: i,
+            }
 			return direct
 		}
 	}
 	for (var i = 0; i < pacProxyRules.length; i++) {
 		if (checkMatch(url, host, pacProxyRules[i])) {
+            whichRuleIsWork.msg = 'Hitting the PAC proxy rules'
+            whichRuleIsWork.data = {
+                url: url,
+                host: host,
+                rule: pacProxyRules[i],
+                index: i,
+            }
 			return proxy
 		}
 	}
 	if (pacMode == 'proxy') {
+        whichRuleIsWork.msg = 'Hitting the PAC proxy mode'
 		return proxy;
 	}
+    whichRuleIsWork.msg = 'Hitting the PAC direct mode'
 	return direct;
 }
 var pacDirectRules = {{.PacDirect}};
