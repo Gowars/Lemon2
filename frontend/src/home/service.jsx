@@ -31,18 +31,28 @@ function getVNext(info) {
         streamSettings = {
             network: info.net,
             security: info.tls || "none",
-            httpSettings: {
-                header: {
-                    path: info.path,
-                    host: [info.host].filter((i) => i),
-                },
-            },
             tlsSettings: {
                 allowInsecure: true,
                 fingerprint: info.fp || "chrome",
                 serverName: info.sni,
             },
         };
+
+        if (info.net == 'ws') {
+            streamSettings.wsSettings = {
+                "path": info.path,
+                "headers": {
+                    "host": info.host
+                }
+            }
+        } else {
+            streamSettings.httpSettings = {
+                header: {
+                    path: info.path,
+                    host: [info.host].filter((i) => i),
+                }
+            }
+        }
     }
 
     return {
@@ -215,7 +225,7 @@ export function convertConfig2vmess(v2rayConfig, ps) {
     const streamSettings = vmessOutbound.streamSettings;
     const httpSettings = streamSettings.httpSettings || {};
 
-    return createVmess({
+    const conf = {
         v: "2", // 协议版本
         ps,
         add: vnext.address, // 服务器地址
@@ -233,7 +243,14 @@ export function convertConfig2vmess(v2rayConfig, ps) {
         scy: user.security || "auto", // 重复字段，保持一致
         fp: streamSettings.tlsSettings?.fingerprint || "", // TLS 指纹
         alpn: httpSettings?.alpn?.join(",") || "", // ALPN（未明确指定，留空）
-    });
+    }
+
+    if (conf.net == 'ws') {
+        conf.host = streamSettings?.wsSettings?.headers?.host || ''
+        conf.path = streamSettings?.wsSettings?.path || ''
+    }
+
+    return createVmess(conf);
 }
 
 export const refreshServers = (url = "", callback) => {
