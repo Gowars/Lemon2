@@ -99,6 +99,7 @@ func (ins *PacServer) Start() {
 		url = frontConfig.RemotePacUrl
 	}
 	network.SetPacUrl(url)
+	network.WifiRestart()
 }
 
 func (ins *PacServer) Stop() {

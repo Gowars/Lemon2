@@ -2,6 +2,7 @@ package gosrc
 
 import (
 	"os/exec"
+	"time"
 )
 
 type NetworkSetup struct {
@@ -76,4 +77,18 @@ func (v *NetworkSetup) SetPacUrl(url string) {
 func (v *NetworkSetup) ClearPacUrl() {
 	exec.Command(v.path, "-setautoproxystate", v.name, "off").Run()
 	exec.Command(v.path, "-setautoproxystate", v.name, "(null)").Run()
+}
+
+func (v *NetworkSetup) WifiOff() {
+	exec.Command(v.path, "-setautoproxystate", "Wi-Fi", "off").Run()
+}
+
+func (v *NetworkSetup) WifiOn() {
+	exec.Command(v.path, "-setautoproxystate", "Wi-Fi", "on").Run()
+}
+
+func (v *NetworkSetup) WifiRestart() {
+	v.WifiOff()
+	time.Sleep(1 * time.Second)
+	v.WifiOn()
 }
